@@ -3,7 +3,7 @@ from PIL import ImageEnhance
 
 # 感谢老司机
 # https://zhuanlan.zhihu.com/p/31164700
-def grayCar(whiteImg, blackImg, light=0.3):
+def grayCar(whiteImg, blackImg, light=0.3, chess=False):
     """发黑白车"""
     # 加载图像, 转成灰度图
     _im1 = Image.open(whiteImg).convert('L')
@@ -14,6 +14,26 @@ def grayCar(whiteImg, blackImg, light=0.3):
     blackWidth, blackHeight = _im2.size
     width = max(whiteWidth, blackWidth)
     height = max(whiteHeight, blackHeight)
+
+    # 棋盘格化
+    if chess:
+
+        pix = list(_im1.getdata())
+        for i in range(whiteWidth * whiteHeight):
+            x = i / whiteWidth
+            y = i % whiteWidth
+            if (x + y) % 2 == 0:
+                pix[i] = 255
+        _im1.putdata(pix)
+
+        pix = list(_im2.getdata())
+        for i in range(blackWidth * blackHeight):
+            x = i / blackWidth
+            y = i % blackWidth
+            if (x + y) % 2 != 0:
+                pix[i] = 0
+        _im2.putdata(pix)
+
 
     # 建立新的, 大小合适图片
     im3 = Image.new('RGBA', (width, height))

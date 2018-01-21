@@ -15,6 +15,8 @@
 
 [幻影坦克架构指南(三)](https://zhuanlan.zhihu.com/p/32532733)
 
+[棋盘格与幻影坦克](https://zhuanlan.zhihu.com/p/33148445)
+
 
 ### 用法
 

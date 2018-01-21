@@ -47,9 +47,9 @@ proc vTcl:project:info {} {
         set dflt,origin 0
         set runvisible 1
     }
-    set site_4_0 .top37.pNo40.t0 
+    set site_4_0 .top37.tNo38.t0 
     set site_4_0 $site_4_0
-    set site_4_1 .top37.pNo40.t1 
+    set site_4_1 .top37.tNo38.t1 
     set site_4_0 $site_4_1
     namespace eval ::widgets_bindings {
         set tagslist _TopLevel
@@ -81,8 +81,9 @@ proc vTclWindow.top37 {base} {
     ###################
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
         -background {#d9d9d9} -highlightcolor black 
+    wm withdraw $top
     wm focusmodel $top passive
-    wm geometry $top 810x729+434+229
+    wm geometry $top 810x729+408+311
     update
     # set in toplevel.wgt.
     global vTcl
@@ -91,8 +92,7 @@ proc vTclWindow.top37 {base} {
     wm maxsize $top 1905 1050
     wm minsize $top 1 1
     wm overrideredirect $top 0
-    wm resizable $top 1 1
-    wm deiconify $top
+    wm resizable $top 0 0
     wm title $top "MirageTankGoGUI"
     vTcl:DefineAlias "$top" "Toplevel1" vTcl:Toplevel:WidgetProc "" 1
     entry $top.ent38 \
@@ -148,96 +148,6 @@ proc vTclWindow.top37 {base} {
         -background {#d9d9d9} -command startBuild -foreground {#000000} \
         -highlightcolor black -text 开始发车! 
     vTcl:DefineAlias "$top.but53" "start" vTcl:WidgetProc "Toplevel1" 1
-    ttk::style configure PC.TNotebook -background #d9d9d9
-    ttk::style configure PC.TNotebook.Tab -background #d9d9d9
-    ttk::style configure PC.TNotebook.Tab -foreground #000000
-    ttk::style configure PC.TNotebook.Tab -font TkDefaultFont
-    ttk::style layout PC.TNotebook.Tab {
-                    Notebook.tab -children {
-                        Notebook.padding -side top -children {
-                            Notebook.focus -side top -children {
-                                Notebook.text -side right
-                                Notebook.image -side left
-                            }
-                        }
-                    }
-               }
-    vTcl::widgets::ttk::pnotebook::createCmd $top.pNo40 \
-        -width 300 -height 200 -style {"PC.TNotebook"} 
-    vTcl:DefineAlias "$top.pNo40" "PNotebook1" vTcl:WidgetProc "Toplevel1" 1
-    $top.pNo40 configure -style "PC.TNotebook"
-    bind $top.pNo40 <Button-1> {
-        button_press
-    }
-    bind $top.pNo40 <ButtonRelease-1> {
-        button_release
-    }
-    bind $top.pNo40 <Motion> {
-        mouse_over
-    }
-    frame $top.pNo40.t0 \
-        -background {#d9d9d9} 
-    vTcl:DefineAlias "$top.pNo40.t0" "PNotebook1_t0" vTcl:WidgetProc "Toplevel1" 1
-    $top.pNo40 add $top.pNo40.t0 \
-        -padding 0 -sticky nsew -state normal -text 灰度车 -image image2 \
-        -compound none -underline -1 
-    set site_4_0  $top.pNo40.t0
-    label $site_4_0.lab42 \
-        -background {#d9d9d9} -foreground {#000000} -text 黑底亮度: 
-    vTcl:DefineAlias "$site_4_0.lab42" "Label4" vTcl:WidgetProc "Toplevel1" 1
-    spinbox $site_4_0.spi50 \
-        -background white -foreground black -from 0.0 -increment 0.01 \
-        -justify right -to 1.0 
-    vTcl:DefineAlias "$site_4_0.spi50" "blackLight" vTcl:WidgetProc "Toplevel1" 1
-    place $site_4_0.lab42 \
-        -in $site_4_0 -x 20 -y 60 -width 68 -height 24 -anchor nw \
-        -bordermode inside 
-    place $site_4_0.spi50 \
-        -in $site_4_0 -x 120 -y 60 -width 156 -height 26 -anchor nw \
-        -bordermode inside 
-    frame $top.pNo40.t1 \
-        -background {#d9d9d9} 
-    vTcl:DefineAlias "$top.pNo40.t1" "PNotebook1_t1" vTcl:WidgetProc "Toplevel1" 1
-    $top.pNo40 add $top.pNo40.t1 \
-        -padding 0 -sticky nsew -state normal -text 彩色车 -image image2 \
-        -compound none -underline -1 
-    set site_4_1  $top.pNo40.t1
-    spinbox $site_4_1.spi52 \
-        -background white -foreground black -from 0.0 -increment 0.01 \
-        -justify right -to 1.0 
-    vTcl:DefineAlias "$site_4_1.spi52" "whiteColor" vTcl:WidgetProc "Toplevel1" 1
-    spinbox $site_4_1.spi53 \
-        -background white -foreground black -from 0.0 -increment 0.01 \
-        -justify right -to 1.0 
-    vTcl:DefineAlias "$site_4_1.spi53" "blackColor" vTcl:WidgetProc "Toplevel1" 1
-    spinbox $site_4_1.spi54 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -increment 0.01 -justify right -to 1.0 
-    vTcl:DefineAlias "$site_4_1.spi54" "blackLight_c" vTcl:WidgetProc "Toplevel1" 1
-    label $site_4_1.lab58 \
-        -background {#d9d9d9} -foreground {#000000} -text 黑底亮度: 
-    vTcl:DefineAlias "$site_4_1.lab58" "Label5" vTcl:WidgetProc "Toplevel1" 1
-    label $site_4_1.lab59 \
-        -background {#d9d9d9} -bitmap {} -foreground {#000000} -text 白底色彩: 
-    vTcl:DefineAlias "$site_4_1.lab59" "Label6" vTcl:WidgetProc "Toplevel1" 1
-    label $site_4_1.lab60 \
-        -background {#d9d9d9} -foreground {#000000} -text 黑底色彩: 
-    vTcl:DefineAlias "$site_4_1.lab60" "Label7" vTcl:WidgetProc "Toplevel1" 1
-    place $site_4_1.spi52 \
-        -in $site_4_1 -x 120 -y 60 -width 156 -height 26 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.spi53 \
-        -in $site_4_1 -x 120 -y 100 -width 156 -height 26 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.spi54 \
-        -in $site_4_1 -x 120 -y 20 -width 156 -height 26 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.lab58 \
-        -in $site_4_1 -x 20 -y 20 -anchor nw -bordermode ignore 
-    place $site_4_1.lab59 \
-        -in $site_4_1 -x 20 -y 60 -anchor nw -bordermode ignore 
-    place $site_4_1.lab60 \
-        -in $site_4_1 -x 20 -y 100 -anchor nw -bordermode ignore 
     button $top.but61 \
         -activebackground {#d9d9d9} -activeforeground black \
         -background {#d9d9d9} -command tryBuild -foreground {#000000} \
@@ -255,6 +165,97 @@ proc vTclWindow.top37 {base} {
         -image [vTcl:image:get_image [file join / home zhonghua Coding Python MirageTank remu.png]] \
         -text 黑底效果 
     vTcl:DefineAlias "$top.lab64" "showBlack" vTcl:WidgetProc "Toplevel1" 1
+    ttk::style configure TNotebook -background #d9d9d9
+    ttk::style configure TNotebook.Tab -background #d9d9d9
+    ttk::style configure TNotebook.Tab -foreground #000000
+    ttk::style configure TNotebook.Tab -font TkDefaultFont
+    ttk::style map TNotebook.Tab -background [list disabled #d9d9d9 selected #d9d9d9]
+    ttk::notebook $top.tNo38 \
+        -width 342 -height 169 -takefocus {} 
+    vTcl:DefineAlias "$top.tNo38" "TNotebook1" vTcl:WidgetProc "Toplevel1" 1
+    frame $top.tNo38.t0 \
+        -background {#d9d9d9} -highlightcolor black 
+    vTcl:DefineAlias "$top.tNo38.t0" "TNotebook1_t0" vTcl:WidgetProc "Toplevel1" 1
+    $top.tNo38 add $top.tNo38.t0 \
+        -padding 0 -sticky nsew -state normal -text 灰度车 -image {} \
+        -compound none -underline -1 
+    set site_4_0  $top.tNo38.t0
+    spinbox $site_4_0.spi47 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -to 1.0 
+    vTcl:DefineAlias "$site_4_0.spi47" "blackLight" vTcl:WidgetProc "Toplevel1" 1
+    label $site_4_0.lab49 \
+        -background {#d9d9d9} -foreground {#000000} -text 黑底亮度: 
+    vTcl:DefineAlias "$site_4_0.lab49" "Label7" vTcl:WidgetProc "Toplevel1" 1
+    checkbutton $site_4_0.che50 \
+        -background {#d9d9d9} -foreground {#000000} -justify right \
+        -state active -text 开启棋盘格 -variable che50 
+    vTcl:DefineAlias "$site_4_0.che50" "enableChess" vTcl:WidgetProc "Toplevel1" 1
+    place $site_4_0.spi47 \
+        -in $site_4_0 -x 120 -y 60 -width 156 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_4_0.lab49 \
+        -in $site_4_0 -x 40 -y 60 -anchor nw -bordermode ignore 
+    place $site_4_0.che50 \
+        -in $site_4_0 -x 30 -y 20 -anchor nw -bordermode ignore 
+    frame $top.tNo38.t1 \
+        -background {#d9d9d9} -highlightcolor black 
+    vTcl:DefineAlias "$top.tNo38.t1" "TNotebook1_t1" vTcl:WidgetProc "Toplevel1" 1
+    $top.tNo38 add $top.tNo38.t1 \
+        -padding 0 -sticky nsew -state normal -text 彩色车 -image {} \
+        -compound none -underline -1 
+    set site_4_1  $top.tNo38.t1
+    spinbox $site_4_1.spi41 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -to 1.0 
+    vTcl:DefineAlias "$site_4_1.spi41" "whiteColor" vTcl:WidgetProc "Toplevel1" 1
+    spinbox $site_4_1.spi42 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -to 1.0 
+    vTcl:DefineAlias "$site_4_1.spi42" "blackColor" vTcl:WidgetProc "Toplevel1" 1
+    spinbox $site_4_1.spi43 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -to 1.0 
+    vTcl:DefineAlias "$site_4_1.spi43" "blackLight_c" vTcl:WidgetProc "Toplevel1" 1
+    label $site_4_1.lab44 \
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 黑底亮度: 
+    vTcl:DefineAlias "$site_4_1.lab44" "Label5" vTcl:WidgetProc "Toplevel1" 1
+    label $site_4_1.lab45 \
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 白底色彩: 
+    vTcl:DefineAlias "$site_4_1.lab45" "Label6" vTcl:WidgetProc "Toplevel1" 1
+    label $site_4_1.lab48 \
+        -background {#d9d9d9} -foreground {#000000} -text 黑底色彩: 
+    vTcl:DefineAlias "$site_4_1.lab48" "Label4" vTcl:WidgetProc "Toplevel1" 1
+    place $site_4_1.spi41 \
+        -in $site_4_1 -x 120 -y 60 -width 156 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_4_1.spi42 \
+        -in $site_4_1 -x 120 -y 100 -width 156 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_4_1.spi43 \
+        -in $site_4_1 -x 120 -y 20 -width 156 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_4_1.lab44 \
+        -in $site_4_1 -x 40 -y 20 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_4_1.lab45 \
+        -in $site_4_1 -x 40 -y 60 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_4_1.lab48 \
+        -in $site_4_1 -x 40 -y 100 -width 68 -relwidth 0 -height 24 \
+        -relheight 0 -anchor nw -bordermode ignore 
     ###################
     # SETTING GEOMETRY
     ###################
@@ -285,9 +286,6 @@ proc vTclWindow.top37 {base} {
     place $top.but53 \
         -in $top -x 240 -y 150 -width 132 -relwidth 0 -height 42 -relheight 0 \
         -anchor nw -bordermode ignore 
-    place $top.pNo40 \
-        -in $top -x 430 -y 30 -width 342 -relwidth 0 -height 169 -relheight 0 \
-        -anchor nw -bordermode ignore 
     place $top.but61 \
         -in $top -x 60 -y 150 -width 132 -relwidth 0 -height 42 -relheight 0 \
         -anchor nw -bordermode ignore 
@@ -297,6 +295,9 @@ proc vTclWindow.top37 {base} {
     place $top.lab64 \
         -in $top -x 430 -y 220 -width 340 -relwidth 0 -height 484 \
         -relheight 0 -anchor nw -bordermode ignore 
+    place $top.tNo38 \
+        -in $top -x 430 -y 30 -width 342 -relwidth 0 -height 169 -relheight 0 \
+        -anchor nw -bordermode ignore 
 
     vTcl:FireEvent $base <<Ready>>
 }

@@ -6,18 +6,52 @@ cimport cython
 
 # 感谢老司机
 # https://zhuanlan.zhihu.com/p/31164700
-def grayCar(whiteImg, blackImg, float light=0.3):
+# TODO: 棋盘化怎么翻译
+def grayCar(whiteImg, blackImg, float light=0.3, chess=False):
     """发黑白车"""
     # 加载图像, 转成灰度图
     _im1 = Image.open(whiteImg).convert('L')
     _im2 = Image.open(blackImg).convert('L')
 
     # 保证生成的图像够大
-    cdef int whiteWidth, whiteHeight, blackWidth, blackHeight
+    cdef short whiteWidth, whiteHeight, blackWidth, blackHeight
     whiteWidth, whiteHeight = _im1.size
     blackWidth, blackHeight = _im2.size
-    cdef int width = max(whiteWidth, blackWidth)
-    cdef int height = max(whiteHeight, blackHeight)
+    cdef short width = max(whiteWidth, blackWidth)
+    cdef short height = max(whiteHeight, blackHeight)
+
+
+    # 棋盘格化
+    cdef short x, y
+
+    if chess:
+
+        pix = list(_im1.getdata())
+        for i in range(whiteWidth * whiteHeight):
+            x = i / whiteWidth
+            y = i % whiteWidth
+            if (x + y) % 2 == 0:
+                pix[i] = 255
+        _im1.putdata(pix)
+
+        pix = list(_im2.getdata())
+        for i in range(blackWidth * blackHeight):
+            x = i / blackWidth
+            y = i % blackWidth
+            if (x + y) % 2 != 0:
+                pix[i] = 0
+        _im2.putdata(pix)
+
+
+        # for i in range(whiteWidth):
+        #     for j in range(whiteHeight):
+        #         if (i + j) % 2 == 0:
+        #             _im1.putpixel((i, j), (255,))
+        # for i in range(blackWidth):
+        #     for j in range(blackHeight):
+        #         if (i + j) % 2 != 0:
+        #             _im2.putpixel((i, j), (0,))
+
 
     # 建立新的, 大小合适图片
     im3 = Image.new('RGBA', (width, height))
@@ -37,11 +71,11 @@ def grayCar(whiteImg, blackImg, float light=0.3):
     cdef float a, p1, p2
     for i in range(width * height):
 
-        p1 = pix1[i]
-        p2 = pix2[i] * light
+        p1 = pix1[i] / 255
+        p2 = pix2[i] / 255 * light
 
-        a = 1 - p1 / 255.0 + p2 / 255.0
-        r = <int>(p2 / a if not a == 0 else 255)
+        a = 1 - p1 + p2
+        r = <int>(p2 / a * 255 if not a == 0 else 255)
 
         pix3.append((r, r, r, <int>(a * 255)))
 
