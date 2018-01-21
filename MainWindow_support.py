@@ -13,7 +13,12 @@ except ImportError:
     from tkinter import *
     import tkinter.filedialog as filedialog
     import tkinter.messagebox as messagebox
-    import MirageTankGo
+
+try:
+    import CMTCore as MTCore
+except ImportError:
+    import MTCore
+
 
 try:
     import ttk
@@ -117,12 +122,12 @@ def tryBuild():
 
     if w.PNotebook1.tab(w.PNotebook1.select(), "text") == "灰度车":
         blackLight = float(w.blackLight.get())
-        output = MirageTankGo.grayCar(hostFile, hideFile, blackLight)
+        output = MTCore.grayCar(hostFile, hideFile, blackLight)
     else:
         blackLight = float(w.blackLight_c.get())
         whiteColor = float(w.whiteColor.get())
         blackColor = float(w.blackColor.get())
-        output = MirageTankGo.colorfulCar(hostFile, hideFile, blackLight, whiteColor, blackColor)
+        output = MTCore.colorfulCar(hostFile, hideFile, blackLight, whiteColor, blackColor)
 
     w._img = ImageTk.PhotoImage(output)
     w.showWhite.configure(image=w._img)

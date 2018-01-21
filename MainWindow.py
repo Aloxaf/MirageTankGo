@@ -49,83 +49,83 @@ class MirageTankGoGUI:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
-        _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
-        _fgcolor = '#000000'  # X11 color: 'black'
-        _compcolor = '#d9d9d9' # X11 color: 'gray85'
-        _ana1color = '#d9d9d9' # X11 color: 'gray85' 
-        _ana2color = '#d9d9d9' # X11 color: 'gray85' 
+        # _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
+        # _fgcolor = '#000000'  # X11 color: 'black'
+        # _compcolor = '#d9d9d9' # X11 color: 'gray85'
+        # _ana1color = '#d9d9d9' # X11 color: 'gray85'
+        # _ana2color = '#d9d9d9' # X11 color: 'gray85'
         self.style = ttk.Style()
         if sys.platform == "win32":
             self.style.theme_use('winnative')
-        self.style.configure('.',background=_bgcolor)
-        self.style.configure('.',foreground=_fgcolor)
-        self.style.configure('.',font="TkDefaultFont")
-        self.style.map('.',background=
-            [('selected', _compcolor), ('active',_ana2color)])
+        # self.style.configure('.',background=_bgcolor)
+        # self.style.configure('.',foreground=_fgcolor)
+        # self.style.configure('.',font="TkDefaultFont")
+        # self.style.map('.',background=
+        #     [('selected', _compcolor), ('active',_ana2color)])
 
         top.geometry("810x729+434+229")
         top.title("MirageTankGoGUI")
-        top.configure(highlightcolor="black")
-
+        # top.configure(highlightcolor="black")
+        top.resizable(False, False)
 
 
         self.hostFile = Entry(top)
         self.hostFile.place(relx=0.14, rely=0.04,height=26, relwidth=0.25)
-        self.hostFile.configure(background="white")
+        # self.hostFile.configure(background="white")
         self.hostFile.configure(font="TkFixedFont")
-        self.hostFile.configure(selectbackground="#c4c4c4")
+        # self.hostFile.configure(selectbackground="#c4c4c4")
         self.hostFile.configure(textvariable=MainWindow_support.defaultWhite)
 
         self.hostBrowse = Button(top)
         self.hostBrowse.place(relx=0.41, rely=0.04, height=26, width=72)
-        self.hostBrowse.configure(activebackground="#d9d9d9")
+        # self.hostBrowse.configure(activebackground="#d9d9d9")
         self.hostBrowse.configure(command=MainWindow_support.hostFileBrowser)
         self.hostBrowse.configure(text='''浏览..''')
 
         self.Label1 = Label(top)
         self.Label1.place(relx=0.04, rely=0.04, height=24, width=68)
-        self.Label1.configure(activebackground="#f9f9f9")
+        # self.Label1.configure(activebackground="#f9f9f9")
         self.Label1.configure(text='''白底图片:''')
 
         self.Label2 = Label(top)
         self.Label2.place(relx=0.04, rely=0.08, height=24, width=72)
-        self.Label2.configure(activebackground="#f9f9f9")
+        # self.Label2.configure(activebackground="#f9f9f9")
         self.Label2.configure(text='''黑底图片:''')
 
         self.hideFile = Entry(top)
         self.hideFile.place(relx=0.14, rely=0.08,height=26, relwidth=0.25)
-        self.hideFile.configure(background="white")
-        self.hideFile.configure(font="TkFixedFont")
-        self.hideFile.configure(selectbackground="#c4c4c4")
+        # self.hideFile.configure(background="white")
+        # self.hideFile.configure(font="TkFixedFont")
+        # self.hideFile.configure(selectbackground="#c4c4c4")
         self.hideFile.configure(textvariable=MainWindow_support.defaultBlack)
 
         self.hideBrowse = Button(top)
         self.hideBrowse.place(relx=0.41, rely=0.08, height=26, width=72)
-        self.hideBrowse.configure(activebackground="#d9d9d9")
+        # self.hideBrowse.configure(activebackground="#d9d9d9")
         self.hideBrowse.configure(command=MainWindow_support.hideFileBrowser)
         self.hideBrowse.configure(text='''浏览..''')
 
         self.outputFile = Entry(top)
         self.outputFile.place(relx=0.14, rely=0.12,height=26, relwidth=0.25)
-        self.outputFile.configure(background="white")
-        self.outputFile.configure(font="TkFixedFont")
-        self.outputFile.configure(selectbackground="#c4c4c4")
+        # self.outputFile.configure(background="white")
+        # self.outputFile.configure(font="TkFixedFont")
+        # self.outputFile.configure(selectbackground="#c4c4c4")
         self.outputFile.configure(textvariable=MainWindow_support.defaultOutput)
 
         self.outputBrowse = Button(top)
         self.outputBrowse.place(relx=0.41, rely=0.12, height=26, width=72)
-        self.outputBrowse.configure(activebackground="#d9d9d9")
+        # self.outputBrowse.configure(activebackground="#d9d9d9")
         self.outputBrowse.configure(command=MainWindow_support.outputFileBrowser)
         self.outputBrowse.configure(text='''浏览..''')
 
         self.Label3 = Label(top)
         self.Label3.place(relx=0.04, rely=0.12, height=24, width=68)
-        self.Label3.configure(activebackground="#f9f9f9")
+        # self.Label3.configure(activebackground="#f9f9f9")
         self.Label3.configure(text='''输出文件:''')
 
         self.start = Button(top)
         self.start.place(relx=0.3, rely=0.21, height=42, width=132)
-        self.start.configure(activebackground="#d9d9d9")
+        # self.start.configure(activebackground="#d9d9d9")
         self.start.configure(command=MainWindow_support.startBuild)
         self.start.configure(text='''开始发车!''')
 
@@ -176,15 +176,14 @@ class MirageTankGoGUI:
 
         PNOTEBOOK = "ClosetabNotebook" 
 
-        self.style.configure('TNotebook.Tab', background=_bgcolor)
-        self.style.configure('TNotebook.Tab', foreground=_fgcolor)
-        self.style.map('TNotebook.Tab', background=
-            [('selected', _compcolor), ('active',_ana2color)])
+        # self.style.configure('TNotebook.Tab', background=_bgcolor)
+        # self.style.configure('TNotebook.Tab', foreground=_fgcolor)
+        # self.style.map('TNotebook.Tab', background=
+        #     [('selected', _compcolor), ('active',_ana2color)])
         self.PNotebook1 = ttk.Notebook(top)
         self.PNotebook1.place(relx=0.53, rely=0.04, relheight=0.23
                 , relwidth=0.42)
         self.PNotebook1.configure(width=300)
-        self.PNotebook1.configure(style=PNOTEBOOK)
         self.PNotebook1_t0 = Frame(self.PNotebook1)
         self.PNotebook1.add(self.PNotebook1_t0, padding=3)
         self.PNotebook1.tab(0, text="灰度车",compound="none",underline="-1",)
@@ -194,62 +193,62 @@ class MirageTankGoGUI:
 
         self.Label4 = Label(self.PNotebook1_t0)
         self.Label4.place(relx=0.06, rely=0.43, height=24, width=68)
-        self.Label4.configure(activebackground="#f9f9f9")
+        # self.Label4.configure(activebackground="#f9f9f9")
         self.Label4.configure(text='''黑底亮度:''')
 
         self.blackLight = Spinbox(self.PNotebook1_t0, from_=0.0, to=1.0)
         self.blackLight.place(relx=0.35, rely=0.43, relheight=0.19
                 , relwidth=0.46)
-        self.blackLight.configure(activebackground="#f9f9f9")
-        self.blackLight.configure(background="white")
+        # self.blackLight.configure(activebackground="#f9f9f9")
+        # self.blackLight.configure(background="white")
         self.blackLight.configure(increment="0.01")
         self.blackLight.configure(justify=RIGHT)
-        self.blackLight.configure(selectbackground="#c4c4c4")
+        # self.blackLight.configure(selectbackground="#c4c4c4")
         self.blackLight.configure(to="1.0")
 
         self.whiteColor = Spinbox(self.PNotebook1_t1, from_=0.0, to=1.0)
         self.whiteColor.place(relx=0.35, rely=0.43, relheight=0.19
                 , relwidth=0.46)
-        self.whiteColor.configure(activebackground="#f9f9f9")
-        self.whiteColor.configure(background="white")
+        # self.whiteColor.configure(activebackground="#f9f9f9")
+        # self.whiteColor.configure(background="white")
         self.whiteColor.configure(increment="0.01")
         self.whiteColor.configure(justify=RIGHT)
-        self.whiteColor.configure(selectbackground="#c4c4c4")
+        # self.whiteColor.configure(selectbackground="#c4c4c4")
         self.whiteColor.configure(to="1.0")
 
         self.blackColor = Spinbox(self.PNotebook1_t1, from_=0.0, to=1.0)
         self.blackColor.place(relx=0.35, rely=0.71, relheight=0.19
                 , relwidth=0.46)
-        self.blackColor.configure(activebackground="#f9f9f9")
-        self.blackColor.configure(background="white")
+        # self.blackColor.configure(activebackground="#f9f9f9")
+        # self.blackColor.configure(background="white")
         self.blackColor.configure(increment="0.01")
         self.blackColor.configure(justify=RIGHT)
-        self.blackColor.configure(selectbackground="#c4c4c4")
+        # self.blackColor.configure(selectbackground="#c4c4c4")
         self.blackColor.configure(to="1.0")
 
         self.blackLight_c = Spinbox(self.PNotebook1_t1, from_=0.0, to=1.0)
         self.blackLight_c.place(relx=0.35, rely=0.14, relheight=0.19
                 , relwidth=0.46)
-        self.blackLight_c.configure(activebackground="#f9f9f9")
-        self.blackLight_c.configure(background="white")
+        # self.blackLight_c.configure(activebackground="#f9f9f9")
+        # self.blackLight_c.configure(background="white")
         self.blackLight_c.configure(increment="0.01")
         self.blackLight_c.configure(justify=RIGHT)
-        self.blackLight_c.configure(selectbackground="#c4c4c4")
+        # self.blackLight_c.configure(selectbackground="#c4c4c4")
         self.blackLight_c.configure(to="1.0")
 
         self.Label5 = Label(self.PNotebook1_t1)
         self.Label5.place(relx=0.06, rely=0.14, height=24, width=68)
-        self.Label5.configure(activebackground="#f9f9f9")
+        # self.Label5.configure(activebackground="#f9f9f9")
         self.Label5.configure(text='''黑底亮度:''')
 
         self.Label6 = Label(self.PNotebook1_t1)
         self.Label6.place(relx=0.06, rely=0.43, height=24, width=68)
-        self.Label6.configure(activebackground="#f9f9f9")
+        # self.Label6.configure(activebackground="#f9f9f9")
         self.Label6.configure(text='''白底色彩:''')
 
         self.Label7 = Label(self.PNotebook1_t1)
         self.Label7.place(relx=0.06, rely=0.71, height=24, width=68)
-        self.Label7.configure(activebackground="#f9f9f9")
+        # self.Label7.configure(activebackground="#f9f9f9")
         self.Label7.configure(text='''黑底色彩:''')
         self.PNotebook1.bind('<Button-1>',MainWindow_support.button_press)
         self.PNotebook1.bind('<ButtonRelease-1>',MainWindow_support.button_release)
@@ -257,13 +256,13 @@ class MirageTankGoGUI:
 
         self.haveATry = Button(top)
         self.haveATry.place(relx=0.07, rely=0.21, height=42, width=132)
-        self.haveATry.configure(activebackground="#d9d9d9")
+        # self.haveATry.configure(activebackground="#d9d9d9")
         self.haveATry.configure(command=MainWindow_support.tryBuild)
         self.haveATry.configure(text='''试驾''')
 
         self.showWhite = Label(top)
         self.showWhite.place(relx=0.05, rely=0.3, height=484, width=340)
-        self.showWhite.configure(activebackground="#f9f9f9")
+        # self.showWhite.configure(activebackground="#f9f9f9")
         self.showWhite.configure(background="#ffffff")
         self._img1 = PhotoImage(file="./remu.png")
         self.showWhite.configure(image=self._img1)
@@ -271,7 +270,7 @@ class MirageTankGoGUI:
 
         self.showBlack = Label(top)
         self.showBlack.place(relx=0.53, rely=0.3, height=484, width=340)
-        self.showBlack.configure(activebackground="#f9f9f9")
+        # self.showBlack.configure(activebackground="#f9f9f9")
         self.showBlack.configure(background="#000000")
         self._img2 = PhotoImage(file="./remu.png")
         self.showBlack.configure(image=self._img2)
