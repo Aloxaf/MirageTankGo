@@ -31,8 +31,8 @@
 
 (在白色背景和黑色背景下的样子不同)
 
-# GUI截图
-![](https://github.com/YinTianliang/MirageTankGo/blob/master/screenshot.jpg)
+# GUI截图 (linux下)
+![](https://github.com/YinTianliang/MirageTankGo/blob/master/screenshot.png)
 
 # 依赖
 + python3
