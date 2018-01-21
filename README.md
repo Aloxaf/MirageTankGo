@@ -27,7 +27,7 @@
 
 合成图
 
-![](https://github.com/YinTianliang/MirageTankGo/blob/master/reimu.png)
+![](https://github.com/YinTianliang/MirageTankGo/blob/master/remu.png)
 
 (在白色背景和黑色背景下的样子不同)
 
