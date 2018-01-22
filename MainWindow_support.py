@@ -148,6 +148,7 @@ def init(top, gui, *args, **kwargs):
     w = gui
     top_level = top
     root = top
+    root.resizable(False, False)
 
 
 def destroy_window():

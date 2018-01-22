@@ -80,15 +80,15 @@ proc vTclWindow.top37 {base} {
     # CREATING WIDGETS
     ###################
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
-        -background {#d9d9d9} -highlightcolor black 
+        -background {#d9d9d9} 
     wm focusmodel $top passive
-    wm geometry $top 810x729+433+276
+    wm geometry $top 810x730+551+285
     update
     # set in toplevel.wgt.
     global vTcl
     global img_list
     set vTcl(save,dflt,origin) 0
-    wm maxsize $top 1905 1050
+    wm maxsize $top 9999 9999
     wm minsize $top 1 1
     wm overrideredirect $top 0
     wm resizable $top 0 0
@@ -174,17 +174,15 @@ proc vTclWindow.top37 {base} {
         -width 342 -height 179 -takefocus {} 
     vTcl:DefineAlias "$top.tNo38" "TNotebook1" vTcl:WidgetProc "Toplevel1" 1
     frame $top.tNo38.t0 \
-        -background {#d9d9d9} -highlightcolor black 
+        -background {#d9d9d9} 
     vTcl:DefineAlias "$top.tNo38.t0" "TNotebook1_t0" vTcl:WidgetProc "Toplevel1" 1
     $top.tNo38 add $top.tNo38.t0 \
         -padding 0 -sticky nsew -state normal -text 灰度车 -image {} \
         -compound none -underline -1 
     set site_4_0  $top.tNo38.t0
     spinbox $site_4_0.spi47 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -highlightcolor black -increment 0.01 \
-        -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -textvariable blackLight -to 1.0 
+        -background white -foreground black -from 0.0 -increment 0.01 \
+        -justify right -textvariable blackLight -to 1.0 
     vTcl:DefineAlias "$site_4_0.spi47" "blackLight" vTcl:WidgetProc "Toplevel1" 1
     label $site_4_0.lab49 \
         -activebackground {#f9f9f9} -activeforeground black \
@@ -192,9 +190,9 @@ proc vTclWindow.top37 {base} {
         -text 黑底亮度: 
     vTcl:DefineAlias "$site_4_0.lab49" "Label7" vTcl:WidgetProc "Toplevel1" 1
     checkbutton $site_4_0.che50 \
-        -activebackground {#d9d9d9} -activeforeground black \
-        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -justify right -text 开启棋盘格 -variable che50 
+        -background {#d9d9d9} -foreground {#000000} -justify right \
+        -text 开启棋盘格 -variable che50 
+    vTcl:DefineAlias "$site_4_0.che50" "chess" vTcl:WidgetProc "Toplevel1" 1
     place $site_4_0.spi47 \
         -in $site_4_0 -x 120 -y 60 -width 156 -height 26 -anchor nw \
         -bordermode inside 

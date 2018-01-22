@@ -41,18 +41,18 @@ if __name__ == '__main__':
     if argv['--gui']:
         import MainWindow
         MainWindow.vp_start_gui()
-
-    whiteImg = Image.open(argv['<whiteImg>'])
-    blackImg = Image.open(argv['<blackImg>'])
-
-    if argv['-s']:
-        scale = float(['<scale>'])
-        whiteImg = whiteImg.resize((round(x * scale) for x in whiteImg.size), Image.ANTIALIAS)
-        blackImg = blackImg.resize((round(x * scale) for x in blackImg.size), Image.ANTIALIAS)
-
-    if argv['-c']:
-        MTCore.colorfulCar(whiteImg, blackImg, float(argv['<lit>']),
-                    float(argv['<whiteLight>']), float(argv['<blackLight>'])).save(argv['<outputfile>'], 'PNG')
     else:
-        MTCore.grayCar(whiteImg, blackImg, float(argv['--light']), argv['-e']).save(argv['<outputfile>'], 'PNG')
+        whiteImg = Image.open(argv['<whiteImg>'])
+        blackImg = Image.open(argv['<blackImg>'])
+
+        if argv['-s']:
+            scale = float(['<scale>'])
+            whiteImg = whiteImg.resize((round(x * scale) for x in whiteImg.size), Image.ANTIALIAS)
+            blackImg = blackImg.resize((round(x * scale) for x in blackImg.size), Image.ANTIALIAS)
+
+        if argv['-c']:
+            MTCore.colorfulCar(whiteImg, blackImg, float(argv['<lit>']),
+                        float(argv['<whiteLight>']), float(argv['<blackLight>'])).save(argv['<outputfile>'], 'PNG')
+        else:
+            MTCore.grayCar(whiteImg, blackImg, float(argv['--light']), argv['-e']).save(argv['<outputfile>'], 'PNG')
 
