@@ -150,6 +150,20 @@ def init(top, gui, *args, **kwargs):
     root = top
     root.resizable(False, False)
 
+    try:
+        remu = Image.open('remu.png')
+        # TODO: 动态获取
+        size = (340, 484)
+        scale = min([size[i] / remu.size[i] for i in range(2)])
+        remu = remu.resize((round(x * scale) for x in remu.size), Image.ANTIALIAS)
+        w._img = ImageTk.PhotoImage(remu)
+        w.showWhite.configure(image=w._img)
+        w.showBlack.configure(image=w._img)
+
+    except FileNotFoundError:
+        pass
+
+
 
 def destroy_window():
     # Function which closes the window.

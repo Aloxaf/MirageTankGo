@@ -20,7 +20,7 @@ Options:
     -v, --version               显示版本号
 
 Examples:
-    python MirageTankGo.py -o remu.png -b black.png white.jpg -c 0.18 0.5 0.7
+    python MirageTankGo.py -o remu.png -b black.jpg white.jpg -c 0.18 0.5 0.7
 
 """
 
@@ -36,7 +36,7 @@ except ImportError:
 # colorfulCar('white.jpg', 'black.jpg', 'output.png', 0.18, 0.5, 0.7)
 
 if __name__ == '__main__':
-    argv = docopt(__doc__, version='1.2')
+    argv = docopt(__doc__, version='1.2.1')
     # print(argv)
     if argv['--gui']:
         import MainWindow
@@ -45,14 +45,16 @@ if __name__ == '__main__':
         whiteImg = Image.open(argv['<whiteImg>'])
         blackImg = Image.open(argv['<blackImg>'])
 
-        if argv['-s']:
-            scale = float(['<scale>'])
-            whiteImg = whiteImg.resize((round(x * scale) for x in whiteImg.size), Image.ANTIALIAS)
-            blackImg = blackImg.resize((round(x * scale) for x in blackImg.size), Image.ANTIALIAS)
+        if argv['--scale']:
+            scale = float(argv['--scale'])
+            whiteImg = whiteImg.resize((round(x * scale)
+                                        for x in whiteImg.size), Image.ANTIALIAS)
+            blackImg = blackImg.resize((round(x * scale)
+                                        for x in blackImg.size), Image.ANTIALIAS)
 
         if argv['-c']:
             MTCore.colorfulCar(whiteImg, blackImg, float(argv['<lit>']),
-                        float(argv['<whiteLight>']), float(argv['<blackLight>'])).save(argv['<outputfile>'], 'PNG')
+                               float(argv['<whiteLight>']), float(argv['<blackLight>'])).save(argv['<outputfile>'], 'PNG')
         else:
-            MTCore.grayCar(whiteImg, blackImg, float(argv['--light']), argv['-e']).save(argv['<outputfile>'], 'PNG')
-
+            MTCore.grayCar(whiteImg, blackImg, float(
+                argv['--light']), argv['-e']).save(argv['<outputfile>'], 'PNG')

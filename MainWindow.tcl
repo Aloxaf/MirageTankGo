@@ -4,22 +4,6 @@
 set vTcl(timestamp) ""
 
 
-#############################################################################
-## vTcl Code to Load User Images see vTcl:save2 in file.tcl
-
-catch {package require Img}
-
-foreach img {
-
-        {{[file join / home zhonghua Coding Python MirageTank remu.png]} {user image} user {}}
-
-            } {
-# from vTcl:image:dump_create_image_footer
-    eval set _file [lindex $img 0]
-    vTcl:image:create_new_image\
-        $_file [lindex $img 1] [lindex $img 2] [lindex $img 3]
-}
-
 if {!$vTcl(borrow)} {
 
 set vTcl(actual_gui_bg) #d9d9d9
@@ -80,9 +64,9 @@ proc vTclWindow.top37 {base} {
     # CREATING WIDGETS
     ###################
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
-        -background {#d9d9d9} 
+        -background {#d9d9d9} -highlightcolor black 
     wm focusmodel $top passive
-    wm geometry $top 810x730+551+285
+    wm geometry $top 810x730+560+283
     update
     # set in toplevel.wgt.
     global vTcl
@@ -156,13 +140,11 @@ proc vTclWindow.top37 {base} {
     label $top.lab63 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#ffffff} -foreground {#000000} -highlightcolor black \
-        -image [vTcl:image:get_image [file join / home zhonghua Coding Python MirageTank remu.png]] \
         -text 白底效果 
     vTcl:DefineAlias "$top.lab63" "showWhite" vTcl:WidgetProc "Toplevel1" 1
     label $top.lab64 \
         -activebackground {#f9f9f9} -activeforeground black \
-        -background {#000000} -foreground {#000000} -highlightcolor black \
-        -image [vTcl:image:get_image [file join / home zhonghua Coding Python MirageTank remu.png]] \
+        -background {#000000} -foreground {#ffffff} -highlightcolor black \
         -text 黑底效果 
     vTcl:DefineAlias "$top.lab64" "showBlack" vTcl:WidgetProc "Toplevel1" 1
     ttk::style configure TNotebook -background #d9d9d9
@@ -174,15 +156,17 @@ proc vTclWindow.top37 {base} {
         -width 342 -height 179 -takefocus {} 
     vTcl:DefineAlias "$top.tNo38" "TNotebook1" vTcl:WidgetProc "Toplevel1" 1
     frame $top.tNo38.t0 \
-        -background {#d9d9d9} 
+        -background {#d9d9d9} -highlightcolor black 
     vTcl:DefineAlias "$top.tNo38.t0" "TNotebook1_t0" vTcl:WidgetProc "Toplevel1" 1
     $top.tNo38 add $top.tNo38.t0 \
         -padding 0 -sticky nsew -state normal -text 灰度车 -image {} \
         -compound none -underline -1 
     set site_4_0  $top.tNo38.t0
     spinbox $site_4_0.spi47 \
-        -background white -foreground black -from 0.0 -increment 0.01 \
-        -justify right -textvariable blackLight -to 1.0 
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable blackLight -to 1.0 
     vTcl:DefineAlias "$site_4_0.spi47" "blackLight" vTcl:WidgetProc "Toplevel1" 1
     label $site_4_0.lab49 \
         -activebackground {#f9f9f9} -activeforeground black \
@@ -190,8 +174,9 @@ proc vTclWindow.top37 {base} {
         -text 黑底亮度: 
     vTcl:DefineAlias "$site_4_0.lab49" "Label7" vTcl:WidgetProc "Toplevel1" 1
     checkbutton $site_4_0.che50 \
-        -background {#d9d9d9} -foreground {#000000} -justify right \
-        -text 开启棋盘格 -variable che50 
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -justify right -text 开启棋盘格 -variable che50 
     vTcl:DefineAlias "$site_4_0.che50" "chess" vTcl:WidgetProc "Toplevel1" 1
     place $site_4_0.spi47 \
         -in $site_4_0 -x 120 -y 60 -width 156 -height 26 -anchor nw \

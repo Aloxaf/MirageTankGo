@@ -36,7 +36,7 @@
         -v, --version               显示版本号
 
     Examples:
-        python MirageTankGo.py -o remu.png -b black.png white.jpg -c 0.18 0.5 0.7
+        python MirageTankGo.py -o remu.png -b black.jpg white.jpg -c 0.18 0.5 0.7
 
 ## 加速(推荐)
 
