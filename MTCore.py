@@ -12,27 +12,9 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
     # 保证生成的图像够大
     whiteWidth, whiteHeight = _im1.size
     blackWidth, blackHeight = _im2.size
+
     width = max(whiteWidth, blackWidth)
     height = max(whiteHeight, blackHeight)
-
-    # 棋盘格化
-    if chess:
-
-        pix = list(_im1.getdata())
-        for i in range(whiteWidth * whiteHeight):
-            x = i // whiteWidth
-            y = i % whiteWidth
-            if (x + y) % 2 == 0:
-                pix[i] = 255
-        _im1.putdata(pix)
-
-        pix = list(_im2.getdata())
-        for i in range(blackWidth * blackHeight):
-            x = i // blackWidth
-            y = i % blackWidth
-            if (x + y) % 2 != 0:
-                pix[i] = 0
-        _im2.putdata(pix)
 
 
     # 建立新的, 大小合适图片
@@ -45,9 +27,19 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
     im2.paste(_im2, ((width - blackWidth) // 2, (height - blackHeight) // 2))
 
     # 根据官方文档的说法, getpixel和putpixel效率太低, 换用getdata和putdata
-    pix1 = im1.getdata()
-    pix2 = im2.getdata()
+    pix1 = list(im1.getdata())
+    pix2 = list(im2.getdata())
     pix3 = []
+
+    # 棋盘格化
+    if chess:
+        for i in range(width * height):
+            x = i // whiteWidth
+            y = i % whiteWidth
+            if (x + y) % 2 == 0:
+                pix1[i] = 255
+            else:
+                pix2[i] = 0
 
     for i in range(width * height):
 

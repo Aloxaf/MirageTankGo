@@ -26,29 +26,6 @@ cpdef grayCar(whiteImg, blackImg, float light=0.3, bint chess=False):
     cdef int width = max(whiteWidth, blackWidth)
     cdef int height = max(whiteHeight, blackHeight)
 
-
-    # 棋盘格化
-    cdef int x, y, i
-
-    if chess:
-
-        pix = list(_im1.getdata())
-        for i in range(blackWidth * blackHeight):
-            x = i / whiteWidth
-            y = i % whiteWidth
-            if (x + y) % 2 == 0:
-                pix[i] = 255
-        _im1.putdata(pix)
-
-        pix = list(_im2.getdata())
-        for i in range(blackWidth * blackHeight):
-            x = i / blackWidth
-            y = i % blackWidth
-            if (x + y) % 2 != 0:
-                pix[i] = 0
-        _im2.putdata(pix)
-
-
     # 建立新的, 大小合适图片
     im3 = Image.new('RGBA', (width, height))
     im1 = Image.new('L', (width, height), 255)
@@ -59,9 +36,21 @@ cpdef grayCar(whiteImg, blackImg, float light=0.3, bint chess=False):
     im2.paste(_im2, ((width - blackWidth) / 2, (height - blackHeight) / 2))
 
     # 根据官方文档的说法, getpixel和putpixel效率太低, 换用getdata和putdata
-    pix1 = im1.getdata()
-    pix2 = im2.getdata()
+    pix1 = list(im1.getdata())
+    pix2 = list(im2.getdata())
     pix3 = []
+
+    # 棋盘格化
+    cdef int x, y, i
+
+    if chess:
+        for i in range(width * height):
+            x = i / whiteWidth
+            y = i % whiteWidth
+            if (x + y) % 2 == 0:
+                pix1[i] = 255
+            else:
+                pix2[i] = 0
 
     cdef int r
     cdef float a, p1, p2
