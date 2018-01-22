@@ -135,7 +135,7 @@ def tryBuild(justATry=True):
         output = MTCore.colorfulCar(whiteImg, blackImg, blackLight_c.get(), whiteColor.get(), blackColor.get())
 
     if justATry:
-        w._img = ImageTk.PhotoImage(output, height=484, width=340)
+        w._img = ImageTk.PhotoImage(output, height=size[1], width=size[0])
         w.showWhite.configure(image=w._img)
         w.showBlack.configure(image=w._img)
 

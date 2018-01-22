@@ -8,27 +8,32 @@ cimport cython
 # https://zhuanlan.zhihu.com/p/31164700
 
 # TODO: 棋盘格化怎么翻译
-def grayCar(whiteImg, blackImg, float light=0.3, chess=False):
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+cpdef grayCar(whiteImg, blackImg, float light=0.3, bint chess=False):
     """发黑白车"""
     # 加载图像, 转成灰度图
     _im1 = whiteImg.convert('L')
     _im2 = blackImg.convert('L')
 
     # 保证生成的图像够大
-    cdef short whiteWidth, whiteHeight, blackWidth, blackHeight
+    cdef int whiteWidth, whiteHeight, blackWidth, blackHeight
+
     whiteWidth, whiteHeight = _im1.size
     blackWidth, blackHeight = _im2.size
-    cdef short width = max(whiteWidth, blackWidth)
-    cdef short height = max(whiteHeight, blackHeight)
+
+    cdef int width = max(whiteWidth, blackWidth)
+    cdef int height = max(whiteHeight, blackHeight)
 
 
     # 棋盘格化
-    cdef short x, y
+    cdef int x, y, i
 
     if chess:
 
         pix = list(_im1.getdata())
-        for i in range(whiteWidth * whiteHeight):
+        for i in range(blackWidth * blackHeight):
             x = i / whiteWidth
             y = i % whiteWidth
             if (x + y) % 2 == 0:
@@ -75,7 +80,10 @@ def grayCar(whiteImg, blackImg, float light=0.3, chess=False):
     return im3
 
 # https://zhuanlan.zhihu.com/p/32532733
-def colorfulCar(whiteImg, blackImg, float light, float m_colorWhite, float m_colorBlack):
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+cpdef colorfulCar(whiteImg, blackImg, float light, float m_colorWhite, float m_colorBlack):
     """发彩色车"""
     # 加载图像, 转成RGB格式
     _im1 = whiteImg.convert('RGB')
