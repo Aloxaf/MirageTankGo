@@ -6,8 +6,8 @@ from PIL import ImageEnhance
 def grayCar(whiteImg, blackImg, light=0.3, chess=False):
     """发黑白车"""
     # 加载图像, 转成灰度图
-    _im1 = Image.open(whiteImg).convert('L')
-    _im2 = Image.open(blackImg).convert('L')
+    _im1 = whiteImg.convert('L')
+    _im2 = blackImg.convert('L')
 
     # 保证生成的图像够大
     whiteWidth, whiteHeight = _im1.size
@@ -20,7 +20,7 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
 
         pix = list(_im1.getdata())
         for i in range(whiteWidth * whiteHeight):
-            x = i / whiteWidth
+            x = i // whiteWidth
             y = i % whiteWidth
             if (x + y) % 2 == 0:
                 pix[i] = 255
@@ -28,7 +28,7 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
 
         pix = list(_im2.getdata())
         for i in range(blackWidth * blackHeight):
-            x = i / blackWidth
+            x = i // blackWidth
             y = i % blackWidth
             if (x + y) % 2 != 0:
                 pix[i] = 0
@@ -55,7 +55,7 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
         p2 = pix2[i] * light
 
         a = 1 - p1 / 255.0 + p2 / 255.0
-        r = int(p2 / a if not a == 0 else 255)
+        r = round(p2 / a if not a == 0 else 255)
 
         pix3.append((r, r, r, int(a * 255)))
 
@@ -67,8 +67,8 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
 # https://zhuanlan.zhihu.com/p/32532733
 def colorfulCar(whiteImg, blackImg, light, m_colorWhite, m_colorBlack):
     """发彩色车"""
-    _im1 = Image.open(whiteImg).convert('RGB')
-    _im2 = Image.open(blackImg).convert('RGB')
+    _im1 = whiteImg.convert('RGB')
+    _im2 = blackImg.convert('RGB')
 
     _im2 = ImageEnhance.Brightness(_im2).enhance(light)
 
@@ -116,11 +116,14 @@ def colorfulCar(whiteImg, blackImg, light, m_colorWhite, m_colorBlack):
         maxc = max(r2, g2, b2)
         a = min(max(dr * 0.222 + dg * 0.707 + db * 0.071, maxc), 1)
 
-        r = min(r2 / a, 1)
-        g = min(g2 / a, 1)
-        b = min(b2 / a, 1)
+        if a == 0:
+            r = g = b = 1
+        else:
+            r = min(r2 / a, 1)
+            g = min(g2 / a, 1)
+            b = min(b2 / a, 1)
 
-        pix3.append((int(r * 255), int(g * 255), int(b * 255), int(a * 255)))
+        pix3.append((round(r * 255), round(g * 255), round(b * 255), round(a * 255)))
 
     im3.putdata(pix3)
 

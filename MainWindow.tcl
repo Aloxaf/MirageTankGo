@@ -81,9 +81,8 @@ proc vTclWindow.top37 {base} {
     ###################
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
         -background {#d9d9d9} -highlightcolor black 
-    wm withdraw $top
     wm focusmodel $top passive
-    wm geometry $top 810x729+408+311
+    wm geometry $top 810x729+433+276
     update
     # set in toplevel.wgt.
     global vTcl
@@ -93,6 +92,7 @@ proc vTclWindow.top37 {base} {
     wm minsize $top 1 1
     wm overrideredirect $top 0
     wm resizable $top 0 0
+    wm deiconify $top
     wm title $top "MirageTankGoGUI"
     vTcl:DefineAlias "$top" "Toplevel1" vTcl:Toplevel:WidgetProc "" 1
     entry $top.ent38 \
@@ -171,7 +171,7 @@ proc vTclWindow.top37 {base} {
     ttk::style configure TNotebook.Tab -font TkDefaultFont
     ttk::style map TNotebook.Tab -background [list disabled #d9d9d9 selected #d9d9d9]
     ttk::notebook $top.tNo38 \
-        -width 342 -height 169 -takefocus {} 
+        -width 342 -height 179 -takefocus {} 
     vTcl:DefineAlias "$top.tNo38" "TNotebook1" vTcl:WidgetProc "Toplevel1" 1
     frame $top.tNo38.t0 \
         -background {#d9d9d9} -highlightcolor black 
@@ -184,15 +184,17 @@ proc vTclWindow.top37 {base} {
         -activebackground {#f9f9f9} -background white -foreground black \
         -from 0.0 -highlightcolor black -increment 0.01 \
         -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -to 1.0 
+        -selectforeground black -textvariable blackLight -to 1.0 
     vTcl:DefineAlias "$site_4_0.spi47" "blackLight" vTcl:WidgetProc "Toplevel1" 1
     label $site_4_0.lab49 \
-        -background {#d9d9d9} -foreground {#000000} -text 黑底亮度: 
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 黑底亮度: 
     vTcl:DefineAlias "$site_4_0.lab49" "Label7" vTcl:WidgetProc "Toplevel1" 1
     checkbutton $site_4_0.che50 \
-        -background {#d9d9d9} -foreground {#000000} -justify right \
-        -state active -text 开启棋盘格 -variable che50 
-    vTcl:DefineAlias "$site_4_0.che50" "enableChess" vTcl:WidgetProc "Toplevel1" 1
+        -activebackground {#d9d9d9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -justify right -text 开启棋盘格 -variable che50 
     place $site_4_0.spi47 \
         -in $site_4_0 -x 120 -y 60 -width 156 -height 26 -anchor nw \
         -bordermode inside 
@@ -211,19 +213,19 @@ proc vTclWindow.top37 {base} {
         -activebackground {#f9f9f9} -background white -foreground black \
         -from 0.0 -highlightcolor black -increment 0.01 \
         -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -to 1.0 
+        -selectforeground black -textvariable whiteColor -to 1.0 
     vTcl:DefineAlias "$site_4_1.spi41" "whiteColor" vTcl:WidgetProc "Toplevel1" 1
     spinbox $site_4_1.spi42 \
         -activebackground {#f9f9f9} -background white -foreground black \
         -from 0.0 -highlightcolor black -increment 0.01 \
         -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -to 1.0 
+        -selectforeground black -textvariable blackColor -to 1.0 
     vTcl:DefineAlias "$site_4_1.spi42" "blackColor" vTcl:WidgetProc "Toplevel1" 1
     spinbox $site_4_1.spi43 \
         -activebackground {#f9f9f9} -background white -foreground black \
         -from 0.0 -highlightcolor black -increment 0.01 \
         -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -to 1.0 
+        -selectforeground black -textvariable blackLight_c -to 1.0 
     vTcl:DefineAlias "$site_4_1.spi43" "blackLight_c" vTcl:WidgetProc "Toplevel1" 1
     label $site_4_1.lab44 \
         -activebackground {#f9f9f9} -activeforeground black \
@@ -236,7 +238,9 @@ proc vTclWindow.top37 {base} {
         -text 白底色彩: 
     vTcl:DefineAlias "$site_4_1.lab45" "Label6" vTcl:WidgetProc "Toplevel1" 1
     label $site_4_1.lab48 \
-        -background {#d9d9d9} -foreground {#000000} -text 黑底色彩: 
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 黑底色彩: 
     vTcl:DefineAlias "$site_4_1.lab48" "Label4" vTcl:WidgetProc "Toplevel1" 1
     place $site_4_1.spi41 \
         -in $site_4_1 -x 120 -y 60 -width 156 -height 26 -anchor nw \
@@ -256,6 +260,17 @@ proc vTclWindow.top37 {base} {
     place $site_4_1.lab48 \
         -in $site_4_1 -x 40 -y 100 -width 68 -relwidth 0 -height 24 \
         -relheight 0 -anchor nw -bordermode ignore 
+    spinbox $top.spi41 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.01 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable scale -to 1.0 
+    vTcl:DefineAlias "$top.spi41" "scale" vTcl:WidgetProc "Toplevel1" 1
+    label $top.lab44 \
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 缩放比例: 
+    vTcl:DefineAlias "$top.lab44" "Label8" vTcl:WidgetProc "Toplevel1" 1
     ###################
     # SETTING GEOMETRY
     ###################
@@ -284,10 +299,10 @@ proc vTclWindow.top37 {base} {
     place $top.lab49 \
         -in $top -x 30 -y 90 -anchor nw -bordermode ignore 
     place $top.but53 \
-        -in $top -x 240 -y 150 -width 132 -relwidth 0 -height 42 -relheight 0 \
+        -in $top -x 240 -y 160 -width 132 -relwidth 0 -height 42 -relheight 0 \
         -anchor nw -bordermode ignore 
     place $top.but61 \
-        -in $top -x 60 -y 150 -width 132 -relwidth 0 -height 42 -relheight 0 \
+        -in $top -x 60 -y 160 -width 132 -relwidth 0 -height 42 -relheight 0 \
         -anchor nw -bordermode ignore 
     place $top.lab63 \
         -in $top -x 40 -y 220 -width 340 -relwidth 0 -height 484 -relheight 0 \
@@ -296,8 +311,13 @@ proc vTclWindow.top37 {base} {
         -in $top -x 430 -y 220 -width 340 -relwidth 0 -height 484 \
         -relheight 0 -anchor nw -bordermode ignore 
     place $top.tNo38 \
-        -in $top -x 430 -y 30 -width 342 -relwidth 0 -height 169 -relheight 0 \
+        -in $top -x 430 -y 30 -width 342 -relwidth 0 -height 179 -relheight 0 \
         -anchor nw -bordermode ignore 
+    place $top.spi41 \
+        -in $top -x 110 -y 120 -width 206 -relwidth 0 -height 26 -relheight 0 \
+        -anchor nw -bordermode ignore 
+    place $top.lab44 \
+        -in $top -x 30 -y 120 -anchor nw -bordermode ignore 
 
     vTcl:FireEvent $base <<Ready>>
 }

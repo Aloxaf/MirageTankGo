@@ -8,7 +8,6 @@
 
 本工具可以让您无论在Linux还是在Windows下都能快速发车
 
-
 ### 原理
 
 [幻影坦克架构指南(一)](https://zhuanlan.zhihu.com/p/31164700)
@@ -17,27 +16,27 @@
 
 [棋盘格与幻影坦克](https://zhuanlan.zhihu.com/p/33148445)
 
-
 ### 用法
 
     Usage:
-        MirageTankGo.py -h
         MirageTankGo.py --gui
-        MirageTankGo.py -o <outputfile> -b <blackImg> <whiteImg> ([-r <rat>]|[-c <rat> <whiteLight> <blackLight>])
+        MirageTankGo.py -h
+        MirageTankGo.py -o <outputfile> -b <blackImg> <whiteImg> [-s <scale>] ([-l <lit>] [-e]|[-c <lit> <whiteLight> <blackLight>])
         MirageTankGo.py -v
 
     Options:
         --gui                       以GUI模式启动(需要tkinter支持, Win下自带)
         -h, --help                  显示本帮助
         -o                          输出文件(png格式)
-        -i                          要隐藏的图片
-        -r <rat>, --ratio=<rat>     被隐藏图片亮度, 取值0~1, 越低越难发现 [default: 0.3].
+        -s, --scale=<scale>         缩放比例 [default: 1.0]
+        -b                          黑底下显示的图片
+        -l <lit>, --light=<lit>     黑底图片亮度, 取值0~1, 越低越难发现 [default: 0.3].
         -c                          发彩色车
+        -e                          使用棋盘格
         -v, --version               显示版本号
 
     Examples:
-        python MirageTankGo.py -o remu.png -b black.jpg white.jpg -c 0.18 0.5 0.7
-
+        python MirageTankGo.py -o remu.png -b black.png white.jpg -c 0.18 0.5 0.7
 
 ## 加速(推荐)
 

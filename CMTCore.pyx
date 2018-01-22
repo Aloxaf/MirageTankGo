@@ -6,12 +6,13 @@ cimport cython
 
 # 感谢老司机
 # https://zhuanlan.zhihu.com/p/31164700
-# TODO: 棋盘化怎么翻译
+
+# TODO: 棋盘格化怎么翻译
 def grayCar(whiteImg, blackImg, float light=0.3, chess=False):
     """发黑白车"""
     # 加载图像, 转成灰度图
-    _im1 = Image.open(whiteImg).convert('L')
-    _im2 = Image.open(blackImg).convert('L')
+    _im1 = whiteImg.convert('L')
+    _im2 = blackImg.convert('L')
 
     # 保证生成的图像够大
     cdef short whiteWidth, whiteHeight, blackWidth, blackHeight
@@ -41,16 +42,6 @@ def grayCar(whiteImg, blackImg, float light=0.3, chess=False):
             if (x + y) % 2 != 0:
                 pix[i] = 0
         _im2.putdata(pix)
-
-
-        # for i in range(whiteWidth):
-        #     for j in range(whiteHeight):
-        #         if (i + j) % 2 == 0:
-        #             _im1.putpixel((i, j), (255,))
-        # for i in range(blackWidth):
-        #     for j in range(blackHeight):
-        #         if (i + j) % 2 != 0:
-        #             _im2.putpixel((i, j), (0,))
 
 
     # 建立新的, 大小合适图片
@@ -87,8 +78,8 @@ def grayCar(whiteImg, blackImg, float light=0.3, chess=False):
 def colorfulCar(whiteImg, blackImg, float light, float m_colorWhite, float m_colorBlack):
     """发彩色车"""
     # 加载图像, 转成RGB格式
-    _im1 = Image.open(whiteImg).convert('RGB')
-    _im2 = Image.open(blackImg).convert('RGB')
+    _im1 = whiteImg.convert('RGB')
+    _im2 = blackImg.convert('RGB')
 
     _im2 = ImageEnhance.Brightness(_im2).enhance(light)
 
@@ -140,9 +131,13 @@ def colorfulCar(whiteImg, blackImg, float light, float m_colorWhite, float m_col
         maxc = max(r2, g2, b2)
         a = min(max(dr * 0.222 + dg * 0.707 + db * 0.071, maxc), 1)
 
-        r = min(r2 / a, 1)
-        g = min(g2 / a, 1)
-        b = min(b2 / a, 1)
+        if a == 0:
+            r = g = b = 1
+        else:
+            r = min(r2 / a, 1)
+            g = min(g2 / a, 1)
+            b = min(b2 / a, 1)
+
 
         pix3.append((<int>(r * 255), <int>(g * 255), <int>(b * 255), <int>(a * 255)))
 
