@@ -21,22 +21,24 @@
     Usage:
         MirageTankGo.py --gui
         MirageTankGo.py -h
-        MirageTankGo.py -o <outputfile> -b <blackImg> <whiteImg> [-s <scale>] ([-l <lit>] [-e]|[-c <lit> <whiteLight> <blackLight>])
+        MirageTankGo.py -o <outputfile> <blackImg> <whiteImg>
+                        [-s <whiteScale> <blackScale>]
+                        [-l <whiteLit> <blackLit>]
+                        [-e | -c <whiteCol> <blackCol>]
         MirageTankGo.py -v
-
+    
     Options:
-        --gui                       以GUI模式启动(需要tkinter支持, Win下自带)
-        -h, --help                  显示本帮助
-        -o                          输出文件(png格式)
-        -s, --scale=<scale>         缩放比例 [default: 1.0]
-        -b                          黑底下显示的图片
-        -l <lit>, --light=<lit>     黑底图片亮度, 取值0~1, 越低越难发现 [default: 0.3].
-        -c                          发彩色车
-        -e                          使用棋盘格
-        -v, --version               显示版本号
-
+        --gui                以GUI模式启动(需要tkinter支持, Win下自带)
+        -h, --help           显示本帮助
+        -o                   输出文件(png格式)
+        -s                   缩放比例
+        -l                   黑底和白底的亮度, 取值0~1.
+        -e                   使用棋盘格(仅限灰度车)
+        -c                   彩色车的黑底白底色彩保留比例, 取值0~1
+        -v, --version        显示版本号
+    
     Examples:
-        python MirageTankGo.py -o remu.png -b black.jpg white.jpg -c 0.18 0.5 0.7
+        python MirageTankGo.py -o remu.png black.jpg white.jpg -s 1 1 -l 1 0.18 -c 0.5 0.7
 
 ## 加速(推荐)
 
@@ -49,17 +51,17 @@
 
 白底图
 
-![](https://github.com/YinTianliang/MirageTankGo/blob/master/white.jpg)
+<img src="https://github.com/YinTianliang/MirageTankGo/blob/master/white.jpg" width="272" height="550">
 
 
 黑底图
 
-![](https://github.com/YinTianliang/MirageTankGo/blob/master/black.jpg)
+<img src="https://github.com/YinTianliang/MirageTankGo/blob/master/black.jpg" width="272" height="550">
 
 
 合成图
 
-![](https://github.com/YinTianliang/MirageTankGo/blob/master/remu.png)
+<img src="https://github.com/YinTianliang/MirageTankGo/blob/master/remu.jpg" width="272" height="550">
 
 (在白色背景和黑色背景下的样子不同, 建议使用手机QQ发送以查看效果)
 
@@ -67,6 +69,8 @@
 ## GUI截图
 
 ![](https://github.com/YinTianliang/MirageTankGo/blob/master/screenshot.png)
+
+
 ![](https://github.com/YinTianliang/MirageTankGo/blob/master/screenshot2.png)
 
 ## 依赖

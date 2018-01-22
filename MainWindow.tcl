@@ -31,10 +31,9 @@ proc vTcl:project:info {} {
         set dflt,origin 0
         set runvisible 1
     }
-    set site_4_0 .top37.tNo38.t0 
-    set site_4_0 $site_4_0
-    set site_4_1 .top37.tNo38.t1 
-    set site_4_0 $site_4_1
+    set site_3_0 $base.fra38
+    set site_3_0 $base.fra41
+    set site_3_0 $base.fra67
     namespace eval ::widgets_bindings {
         set tagslist _TopLevel
     }
@@ -64,9 +63,9 @@ proc vTclWindow.top37 {base} {
     # CREATING WIDGETS
     ###################
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
-        -background {#d9d9d9} -highlightcolor black 
+        -menu "$top.m38" -background {#d9d9d9} -highlightcolor black 
     wm focusmodel $top passive
-    wm geometry $top 810x730+560+283
+    wm geometry $top 807x719+381+180
     update
     # set in toplevel.wgt.
     global vTcl
@@ -78,229 +77,236 @@ proc vTclWindow.top37 {base} {
     wm resizable $top 0 0
     wm deiconify $top
     wm title $top "MirageTankGoGUI"
-    vTcl:DefineAlias "$top" "Toplevel1" vTcl:Toplevel:WidgetProc "" 1
-    entry $top.ent38 \
-        -background white -font TkFixedFont -foreground {#000000} \
-        -highlightcolor black -insertbackground black \
-        -selectbackground {#c4c4c4} -selectforeground black \
-        -textvariable defaultWhite 
-    vTcl:DefineAlias "$top.ent38" "hostFile" vTcl:WidgetProc "Toplevel1" 1
-    button $top.but41 \
-        -activebackground {#d9d9d9} -activeforeground black \
-        -background {#d9d9d9} -command hostFileBrowser -foreground {#000000} \
-        -highlightcolor black -text 浏览.. 
-    vTcl:DefineAlias "$top.but41" "hostBrowse" vTcl:WidgetProc "Toplevel1" 1
-    label $top.lab42 \
-        -activebackground {#f9f9f9} -activeforeground black \
-        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -text 白底图片: 
-    vTcl:DefineAlias "$top.lab42" "Label1" vTcl:WidgetProc "Toplevel1" 1
-    label $top.lab43 \
-        -activebackground {#f9f9f9} -activeforeground black \
-        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -text {黑底图片: } 
-    vTcl:DefineAlias "$top.lab43" "Label2" vTcl:WidgetProc "Toplevel1" 1
-    entry $top.ent44 \
-        -background white -font TkFixedFont -foreground {#000000} \
-        -highlightcolor black -insertbackground black \
-        -selectbackground {#c4c4c4} -selectforeground black \
-        -textvariable defaultBlack 
-    vTcl:DefineAlias "$top.ent44" "hideFile" vTcl:WidgetProc "Toplevel1" 1
-    button $top.but45 \
-        -activebackground {#d9d9d9} -activeforeground black \
-        -background {#d9d9d9} -command hideFileBrowser -foreground {#000000} \
-        -highlightcolor black -text 浏览.. 
-    vTcl:DefineAlias "$top.but45" "hideBrowse" vTcl:WidgetProc "Toplevel1" 1
-    entry $top.ent47 \
-        -background white -font TkFixedFont -foreground {#000000} \
-        -highlightcolor black -insertbackground black \
-        -selectbackground {#c4c4c4} -selectforeground black \
-        -textvariable defaultOutput 
-    vTcl:DefineAlias "$top.ent47" "outputFile" vTcl:WidgetProc "Toplevel1" 1
-    button $top.but48 \
-        -activebackground {#d9d9d9} -activeforeground black \
-        -background {#d9d9d9} -command outputFileBrowser \
-        -foreground {#000000} -highlightcolor black -text 浏览.. 
-    vTcl:DefineAlias "$top.but48" "outputBrowse" vTcl:WidgetProc "Toplevel1" 1
-    label $top.lab49 \
-        -activebackground {#f9f9f9} -activeforeground black \
-        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -text 输出文件: 
-    vTcl:DefineAlias "$top.lab49" "Label3" vTcl:WidgetProc "Toplevel1" 1
-    button $top.but53 \
-        -activebackground {#d9d9d9} -activeforeground black \
-        -background {#d9d9d9} -command startBuild -foreground {#000000} \
-        -highlightcolor black -text 开始发车! 
-    vTcl:DefineAlias "$top.but53" "start" vTcl:WidgetProc "Toplevel1" 1
-    button $top.but61 \
-        -activebackground {#d9d9d9} -activeforeground black \
-        -background {#d9d9d9} -command tryBuild -foreground {#000000} \
-        -highlightcolor black -text 试驾 
-    vTcl:DefineAlias "$top.but61" "haveATry" vTcl:WidgetProc "Toplevel1" 1
-    label $top.lab63 \
+    frame $top.fra38 \
+        -borderwidth 2 -relief groove -background {#d9d9d9} -height 515 \
+        -highlightcolor black -width 775 
+    vTcl:DefineAlias "$top.fra38" "Frame1" vTcl:WidgetProc "$top" 1
+    set site_3_0 $top.fra38
+    label $site_3_0.lab39 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#ffffff} -foreground {#000000} -highlightcolor black \
         -text 白底效果 
-    vTcl:DefineAlias "$top.lab63" "showWhite" vTcl:WidgetProc "Toplevel1" 1
-    label $top.lab64 \
+    vTcl:DefineAlias "$site_3_0.lab39" "showWhite" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab40 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#000000} -foreground {#ffffff} -highlightcolor black \
         -text 黑底效果 
-    vTcl:DefineAlias "$top.lab64" "showBlack" vTcl:WidgetProc "Toplevel1" 1
-    ttk::style configure TNotebook -background #d9d9d9
-    ttk::style configure TNotebook.Tab -background #d9d9d9
-    ttk::style configure TNotebook.Tab -foreground #000000
-    ttk::style configure TNotebook.Tab -font TkDefaultFont
-    ttk::style map TNotebook.Tab -background [list disabled #d9d9d9 selected #d9d9d9]
-    ttk::notebook $top.tNo38 \
-        -width 342 -height 179 -takefocus {} 
-    vTcl:DefineAlias "$top.tNo38" "TNotebook1" vTcl:WidgetProc "Toplevel1" 1
-    frame $top.tNo38.t0 \
-        -background {#d9d9d9} -highlightcolor black 
-    vTcl:DefineAlias "$top.tNo38.t0" "TNotebook1_t0" vTcl:WidgetProc "Toplevel1" 1
-    $top.tNo38 add $top.tNo38.t0 \
-        -padding 0 -sticky nsew -state normal -text 灰度车 -image {} \
-        -compound none -underline -1 
-    set site_4_0  $top.tNo38.t0
-    spinbox $site_4_0.spi47 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -highlightcolor black -increment 0.01 \
-        -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -textvariable blackLight -to 1.0 
-    vTcl:DefineAlias "$site_4_0.spi47" "blackLight" vTcl:WidgetProc "Toplevel1" 1
-    label $site_4_0.lab49 \
-        -activebackground {#f9f9f9} -activeforeground black \
-        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -text 黑底亮度: 
-    vTcl:DefineAlias "$site_4_0.lab49" "Label7" vTcl:WidgetProc "Toplevel1" 1
-    checkbutton $site_4_0.che50 \
-        -activebackground {#f9f9f9} -activeforeground black \
-        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -justify right -text 开启棋盘格 -variable che50 
-    vTcl:DefineAlias "$site_4_0.che50" "chess" vTcl:WidgetProc "Toplevel1" 1
-    place $site_4_0.spi47 \
-        -in $site_4_0 -x 120 -y 60 -width 156 -height 26 -anchor nw \
+    vTcl:DefineAlias "$site_3_0.lab40" "showBlack" vTcl:WidgetProc "$top" 1
+    place $site_3_0.lab39 \
+        -in $site_3_0 -x 20 -y 10 -width 340 -height 485 -anchor nw \
         -bordermode inside 
-    place $site_4_0.lab49 \
-        -in $site_4_0 -x 40 -y 60 -anchor nw -bordermode ignore 
-    place $site_4_0.che50 \
-        -in $site_4_0 -x 30 -y 20 -anchor nw -bordermode ignore 
-    frame $top.tNo38.t1 \
-        -background {#d9d9d9} -highlightcolor black 
-    vTcl:DefineAlias "$top.tNo38.t1" "TNotebook1_t1" vTcl:WidgetProc "Toplevel1" 1
-    $top.tNo38 add $top.tNo38.t1 \
-        -padding 0 -sticky nsew -state normal -text 彩色车 -image {} \
-        -compound none -underline -1 
-    set site_4_1  $top.tNo38.t1
-    spinbox $site_4_1.spi41 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -highlightcolor black -increment 0.01 \
-        -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -textvariable whiteColor -to 1.0 
-    vTcl:DefineAlias "$site_4_1.spi41" "whiteColor" vTcl:WidgetProc "Toplevel1" 1
-    spinbox $site_4_1.spi42 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -highlightcolor black -increment 0.01 \
-        -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -textvariable blackColor -to 1.0 
-    vTcl:DefineAlias "$site_4_1.spi42" "blackColor" vTcl:WidgetProc "Toplevel1" 1
-    spinbox $site_4_1.spi43 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -highlightcolor black -increment 0.01 \
-        -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -textvariable blackLight_c -to 1.0 
-    vTcl:DefineAlias "$site_4_1.spi43" "blackLight_c" vTcl:WidgetProc "Toplevel1" 1
-    label $site_4_1.lab44 \
+    place $site_3_0.lab40 \
+        -in $site_3_0 -x 410 -y 10 -width 340 -height 485 -anchor nw \
+        -bordermode inside 
+    frame $top.fra41 \
+        -borderwidth 2 -relief groove -background {#d9d9d9} -height 175 \
+        -highlightcolor black -width 375 
+    vTcl:DefineAlias "$top.fra41" "Frame2" vTcl:WidgetProc "$top" 1
+    set site_3_0 $top.fra41
+    checkbutton $site_3_0.che42 \
         -activebackground {#f9f9f9} -activeforeground black \
-        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -text 黑底亮度: 
-    vTcl:DefineAlias "$site_4_1.lab44" "Label5" vTcl:WidgetProc "Toplevel1" 1
-    label $site_4_1.lab45 \
+        -background {#d9d9d9} -command switchGray -foreground {#000000} \
+        -highlightcolor black -justify left -text 启用棋盘格 -variable enableChess 
+    vTcl:DefineAlias "$site_3_0.che42" "cenableChess" vTcl:WidgetProc "$top" 1
+    checkbutton $site_3_0.che43 \
+        -background {#d9d9d9} -command switchColor -foreground {#000000} \
+        -justify left -text 发彩色车 -variable colorfulCar 
+    vTcl:DefineAlias "$site_3_0.che43" "ccolorfulCar" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab44 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
         -text 白底色彩: 
-    vTcl:DefineAlias "$site_4_1.lab45" "Label6" vTcl:WidgetProc "Toplevel1" 1
-    label $site_4_1.lab48 \
+    vTcl:DefineAlias "$site_3_0.lab44" "Label11" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab45 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
         -text 黑底色彩: 
-    vTcl:DefineAlias "$site_4_1.lab48" "Label4" vTcl:WidgetProc "Toplevel1" 1
-    place $site_4_1.spi41 \
-        -in $site_4_1 -x 120 -y 60 -width 156 -height 26 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.spi42 \
-        -in $site_4_1 -x 120 -y 100 -width 156 -height 26 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.spi43 \
-        -in $site_4_1 -x 120 -y 20 -width 156 -height 26 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.lab44 \
-        -in $site_4_1 -x 40 -y 20 -width 68 -height 24 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.lab45 \
-        -in $site_4_1 -x 40 -y 60 -width 68 -height 24 -anchor nw \
-        -bordermode inside 
-    place $site_4_1.lab48 \
-        -in $site_4_1 -x 40 -y 100 -width 68 -relwidth 0 -height 24 \
-        -relheight 0 -anchor nw -bordermode ignore 
-    spinbox $top.spi41 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.01 -highlightcolor black -increment 0.01 \
-        -insertbackground black -justify right -selectbackground {#c4c4c4} \
-        -selectforeground black -textvariable scale -to 1.0 
-    vTcl:DefineAlias "$top.spi41" "scale" vTcl:WidgetProc "Toplevel1" 1
-    label $top.lab44 \
+    vTcl:DefineAlias "$site_3_0.lab45" "Label12" vTcl:WidgetProc "$top" 1
+    spinbox $site_3_0.spi46 \
+        -background white -foreground black -increment 0.01 -justify right \
+        -textvariable whiteColor -to 1.0 
+    vTcl:DefineAlias "$site_3_0.spi46" "swhiteColor" vTcl:WidgetProc "$top" 1
+    spinbox $site_3_0.spi47 \
+        -background white -foreground black -increment 0.01 -justify right \
+        -textvariable blackColor -to 1.0 
+    vTcl:DefineAlias "$site_3_0.spi47" "sblackColor" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab48 \
         -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
-        -text 缩放比例: 
-    vTcl:DefineAlias "$top.lab44" "Label8" vTcl:WidgetProc "Toplevel1" 1
+        -text 白底缩放: 
+    vTcl:DefineAlias "$site_3_0.lab48" "Label13" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab49 \
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 黑底缩放: 
+    vTcl:DefineAlias "$site_3_0.lab49" "Label8" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab50 \
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 白底亮度: 
+    vTcl:DefineAlias "$site_3_0.lab50" "Label10" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab51 \
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 黑底亮度: 
+    vTcl:DefineAlias "$site_3_0.lab51" "Label9" vTcl:WidgetProc "$top" 1
+    spinbox $site_3_0.spi52 \
+        -background white -foreground black -from 0.01 -increment 0.01 \
+        -justify right -textvariable whiteScale -to 1.0 
+    vTcl:DefineAlias "$site_3_0.spi52" "swhiteScale" vTcl:WidgetProc "$top" 1
+    spinbox $site_3_0.spi53 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.01 -increment 0.01 -justify right -textvariable blackScale \
+        -to 1.0 
+    vTcl:DefineAlias "$site_3_0.spi53" "sblackScale" vTcl:WidgetProc "$top" 1
+    spinbox $site_3_0.spi54 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.0 -increment 0.01 -justify right -textvariable whiteLight \
+        -to 1.0 
+    vTcl:DefineAlias "$site_3_0.spi54" "swhiteLight" vTcl:WidgetProc "$top" 1
+    spinbox $site_3_0.spi55 \
+        -activebackground {#f9f9f9} -background white -foreground black \
+        -from 0.0 -increment 0.01 -justify right -textvariable blackLight \
+        -to 1.0 
+    vTcl:DefineAlias "$site_3_0.spi55" "sblackLight" vTcl:WidgetProc "$top" 1
+    place $site_3_0.che42 \
+        -in $site_3_0 -x 6 -y 12 -width 105 -height 26 -anchor nw \
+        -bordermode ignore 
+    place $site_3_0.che43 \
+        -in $site_3_0 -x 6 -y 52 -width 90 -height 26 -anchor nw \
+        -bordermode ignore 
+    place $site_3_0.lab44 \
+        -in $site_3_0 -x 10 -y 90 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.lab45 \
+        -in $site_3_0 -x 10 -y 130 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.spi46 \
+        -in $site_3_0 -x 90 -y 90 -width 76 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.spi47 \
+        -in $site_3_0 -x 90 -y 130 -width 76 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.lab48 \
+        -in $site_3_0 -x 210 -y 10 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.lab49 \
+        -in $site_3_0 -x 210 -y 50 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.lab50 \
+        -in $site_3_0 -x 210 -y 90 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.lab51 \
+        -in $site_3_0 -x 210 -y 130 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.spi52 \
+        -in $site_3_0 -x 290 -y 10 -width 76 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.spi53 \
+        -in $site_3_0 -x 290 -y 50 -width 76 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.spi54 \
+        -in $site_3_0 -x 290 -y 90 -width 76 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.spi55 \
+        -in $site_3_0 -x 290 -y 130 -width 76 -height 26 -anchor nw \
+        -bordermode inside 
+    frame $top.fra67 \
+        -borderwidth 2 -relief groove -background {#d9d9d9} -height 175 \
+        -highlightcolor black -width 395 
+    vTcl:DefineAlias "$top.fra67" "Frame3" vTcl:WidgetProc "$top" 1
+    set site_3_0 $top.fra67
+    label $site_3_0.lab57 \
+        -background {#d9d9d9} -foreground {#000000} -text 白底图片: 
+    vTcl:DefineAlias "$site_3_0.lab57" "Label1" vTcl:WidgetProc "$top" 1
+    entry $site_3_0.ent60 \
+        -background white -foreground {#000000} -textvariable whiteImg 
+    vTcl:DefineAlias "$site_3_0.ent60" "ewhiteImg" vTcl:WidgetProc "$top" 1
+    entry $site_3_0.ent61 \
+        -background white -foreground {#000000} -textvariable blackImg 
+    vTcl:DefineAlias "$site_3_0.ent61" "eblackImg" vTcl:WidgetProc "$top" 1
+    entry $site_3_0.ent62 \
+        -background white -foreground {#000000} -textvariable outputImg 
+    vTcl:DefineAlias "$site_3_0.ent62" "eoutputImg" vTcl:WidgetProc "$top" 1
+    button $site_3_0.but63 \
+        -background {#d9d9d9} -command whiteBrowser -foreground {#000000} \
+        -text 浏览.. 
+    vTcl:DefineAlias "$site_3_0.but63" "bwhiteBrowse" vTcl:WidgetProc "$top" 1
+    button $site_3_0.but64 \
+        -background {#d9d9d9} -command blackBrowser -foreground {#000000} \
+        -text 浏览.. 
+    vTcl:DefineAlias "$site_3_0.but64" "bblackBrowse" vTcl:WidgetProc "$top" 1
+    button $site_3_0.but68 \
+        -background {#d9d9d9} -command outputBrowser -foreground {#000000} \
+        -text 浏览.. 
+    vTcl:DefineAlias "$site_3_0.but68" "boutputBrowse" vTcl:WidgetProc "$top" 1
+    button $site_3_0.but69 \
+        -background {#d9d9d9} -command tryBuild -foreground {#000000} \
+        -text 试驾 
+    vTcl:DefineAlias "$site_3_0.but69" "btryBuild" vTcl:WidgetProc "$top" 1
+    button $site_3_0.but70 \
+        -background {#d9d9d9} -command startBuild -foreground {#000000} \
+        -text 开始发车! 
+    vTcl:DefineAlias "$site_3_0.but70" "bstartBuild" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab71 \
+        -background {#d9d9d9} -foreground {#000000} -text 黑底图片: 
+    vTcl:DefineAlias "$site_3_0.lab71" "Label2" vTcl:WidgetProc "$top" 1
+    label $site_3_0.lab72 \
+        -background {#d9d9d9} -foreground {#000000} -text 输出图片: 
+    vTcl:DefineAlias "$site_3_0.lab72" "Label3" vTcl:WidgetProc "$top" 1
+    place $site_3_0.lab57 \
+        -in $site_3_0 -x 22 -y 12 -width 68 -height 24 -anchor nw \
+        -bordermode ignore 
+    place $site_3_0.ent60 \
+        -in $site_3_0 -x 100 -y 10 -width 206 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.ent61 \
+        -in $site_3_0 -x 100 -y 40 -width 206 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.ent62 \
+        -in $site_3_0 -x 100 -y 70 -width 206 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.but63 \
+        -in $site_3_0 -x 310 -y 10 -width 72 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.but64 \
+        -in $site_3_0 -x 310 -y 40 -width 72 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.but68 \
+        -in $site_3_0 -x 310 -y 70 -width 72 -height 26 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.but69 \
+        -in $site_3_0 -x 20 -y 110 -width 132 -height 42 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.but70 \
+        -in $site_3_0 -x 240 -y 110 -width 132 -height 42 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.lab71 \
+        -in $site_3_0 -x 20 -y 40 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    place $site_3_0.lab72 \
+        -in $site_3_0 -x 20 -y 70 -width 68 -height 24 -anchor nw \
+        -bordermode inside 
+    menu $top.m38 \
+        -activebackground {#d8d8d8} -activeforeground {#000000} \
+        -background {#d9d9d9} -font TkMenuFont -foreground {#000000} \
+        -tearoff 0 
+    $top.m38 add command \
+        -activebackground {#d8d8d8} -activeforeground {#000000} \
+        -background {#d9d9d9} -command {#mabout} -font TkMenuFont \
+        -foreground {#000000} -label 关于 
     ###################
     # SETTING GEOMETRY
     ###################
-    place $top.ent38 \
-        -in $top -x 110 -y 30 -width 206 -relwidth 0 -height 26 -relheight 0 \
+    place $top.fra38 \
+        -in $top -x 20 -y 190 -width 775 -relwidth 0 -height 515 -relheight 0 \
         -anchor nw -bordermode ignore 
-    place $top.but41 \
-        -in $top -x 330 -y 30 -width 72 -relwidth 0 -height 26 -relheight 0 \
+    place $top.fra41 \
+        -in $top -x 420 -y 10 -width 375 -relwidth 0 -height 175 -relheight 0 \
         -anchor nw -bordermode ignore 
-    place $top.lab42 \
-        -in $top -x 30 -y 30 -anchor nw -bordermode ignore 
-    place $top.lab43 \
-        -in $top -x 30 -y 60 -anchor nw -bordermode ignore 
-    place $top.ent44 \
-        -in $top -x 110 -y 60 -width 206 -relwidth 0 -height 26 -relheight 0 \
+    place $top.fra67 \
+        -in $top -x 20 -y 10 -width 395 -relwidth 0 -height 175 -relheight 0 \
         -anchor nw -bordermode ignore 
-    place $top.but45 \
-        -in $top -x 330 -y 60 -width 72 -relwidth 0 -height 26 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.ent47 \
-        -in $top -x 110 -y 90 -width 206 -relwidth 0 -height 26 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.but48 \
-        -in $top -x 330 -y 90 -width 72 -relwidth 0 -height 26 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.lab49 \
-        -in $top -x 30 -y 90 -anchor nw -bordermode ignore 
-    place $top.but53 \
-        -in $top -x 240 -y 160 -width 132 -relwidth 0 -height 42 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.but61 \
-        -in $top -x 60 -y 160 -width 132 -relwidth 0 -height 42 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.lab63 \
-        -in $top -x 40 -y 220 -width 340 -relwidth 0 -height 484 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.lab64 \
-        -in $top -x 430 -y 220 -width 340 -relwidth 0 -height 484 \
-        -relheight 0 -anchor nw -bordermode ignore 
-    place $top.tNo38 \
-        -in $top -x 430 -y 30 -width 342 -relwidth 0 -height 179 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.spi41 \
-        -in $top -x 110 -y 120 -width 206 -relwidth 0 -height 26 -relheight 0 \
-        -anchor nw -bordermode ignore 
-    place $top.lab44 \
-        -in $top -x 30 -y 120 -anchor nw -bordermode ignore 
 
     vTcl:FireEvent $base <<Ready>>
 }

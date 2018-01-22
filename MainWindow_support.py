@@ -6,6 +6,11 @@
 #    Jan 22, 2018 08:45:13 AM
 #    Jan 22, 2018 09:10:39 AM
 #    Jan 22, 2018 09:23:50 AM
+#    Jan 22, 2018 08:51:51 PM
+#    Jan 22, 2018 09:23:19 PM
+#    Jan 22, 2018 09:45:46 PM
+#    Jan 22, 2018 10:17:40 PM
+#    Jan 22, 2018 11:28:01 PM
 
 
 import sys
@@ -33,28 +38,25 @@ except ImportError:
     py3 = 1
 
 def set_Tk_var():
-    global defaultWhite
-    defaultWhite = StringVar()
-    defaultWhite.set('white.jpg')
+    global whiteImg
+    whiteImg = StringVar()
+    whiteImg.set('white.jpg')
 
-    global defaultBlack
-    defaultBlack = StringVar()
-    defaultBlack.set('black.jpg')
+    global blackImg
+    blackImg = StringVar()
+    blackImg.set('black.jpg')
 
-    global defaultOutput
-    defaultOutput = StringVar()
-    defaultOutput.set('remu.png')
-
-    global spinbox
-    spinbox = StringVar()
-
-    global che50
-    che50 = BooleanVar()
-    che50.set(False)
+    global outputImg
+    outputImg = StringVar()
+    outputImg.set('remu.png')
 
     global blackLight
     blackLight = DoubleVar()
-    blackLight.set(0.5)
+    blackLight.set(0.2)
+
+    global whiteLight
+    whiteLight = DoubleVar()
+    whiteLight.set(1.0)
 
     global whiteColor
     whiteColor = DoubleVar()
@@ -64,75 +66,123 @@ def set_Tk_var():
     blackColor = DoubleVar()
     blackColor.set(0.7)
 
-    global blackLight_c
-    blackLight_c = DoubleVar()
-    blackLight_c.set(0.18)
+    global blackScale
+    blackScale = DoubleVar()
+    blackScale.set(1.0)
 
-    global scale
-    scale = DoubleVar()
-    scale.set(1.0)
+    global whiteScale
+    whiteScale = DoubleVar()
+    whiteScale.set(1.0)
 
+    global enableChess
+    enableChess = BooleanVar()
+    enableChess.set(False)
 
-def hideFileBrowser():
-    global w
-    print('MainWindow_support.hideFileBrowser')
-    filename = filedialog.askopenfilename(filetypes=[('任何图片', '.*')])
-    w.hideFile.delete(0, END)
-    w.hideFile.insert(0, filename)
+    global colorfulCar
+    colorfulCar = BooleanVar()
+    colorfulCar.set(False)
+
+def switchColor():
+    global w, colorfulCar
+    print('MainWindow_support.switchColor')
+    if colorfulCar.get():
+        w.cenableChess.configure(state='disabled')
+    else:
+        w.cenableChess.configure(state='normal')
+
+def mabout():
+    print('MainWindow_support.mabout')
+    messagebox.showinfo(title='关于', message='MirageTankGo\n项目主页:\nhttps://github.com/YinTianliang/MirageTankGo')
     sys.stdout.flush()
 
-def hostFileBrowser():
-    global w
-    print('MainWindow_support.hostFileBrowser')
-    filename = filedialog.askopenfilename(filetypes=[('任何图片', '.*')])
-    w.hostFile.delete(0, END)
-    w.hostFile.insert(0, filename)
+def switchGray():
+    global w, enableChess
+    print('MainWindow_support.switchGray')
+    if enableChess.get():
+        w.ccolorfulCar.configure(state='disabled')
+        w.swhiteColor.configure(state='disabled')
+        w.sblackColor.configure(state='disabled')
+        w.Label11.configure(state='disabled')
+        w.Label12.configure(state='disabled')
+    else:
+        w.ccolorfulCar.configure(state='normal')
+        w.swhiteColor.configure(state='normal')
+        w.sblackColor.configure(state='normal')
+        w.Label11.configure(state='normal')
+        w.Label12.configure(state='normal')
+
+
     sys.stdout.flush()
 
-def outputFileBrowser():
+def blackBrowser():
     global w
-    print('MainWindow_support.outputFileBrowser')
+    print('MainWindow_support.whiteBrowser')
+    filename = filedialog.askopenfilename(filetypes=[('任何图片', '.*')])
+    if filename:
+        w.eblackImg.delete(0, END)
+        w.eblackImg.insert(0, filename)
+    sys.stdout.flush()
+
+def whiteBrowser():
+    global w
+    print('MainWindow_support.whiteBrowser')
+    filename = filedialog.askopenfilename(filetypes=[('任何图片', '.*')])
+    if filename:
+        w.ewhiteImg.delete(0, END)
+        w.ewhiteImg.insert(0, filename)
+    sys.stdout.flush()
+
+def outputBrowser():
+    global w
+    print('MainWindow_support.outputBrowser')
     filename = filedialog.asksaveasfilename(filetypes=[('png图片', '.png')])
-    w.outputFile.delete(0, END)
-    w.outputFile.insert(0, filename)
+    if filename:
+        w.eoutputImg.delete(0, END)
+        w.eoutputImg.insert(0, filename)
     sys.stdout.flush()
 
 
 def startBuild():
-    global w, scale, defaultOutput
+    global w, outputImg
     print('MainWindow_support.startBuild')
 
-    tryBuild(False).save(defaultOutput.get(), 'PNG')
+    tryBuild(False).save(outputImg.get(), 'PNG')
 
-    messagebox.showinfo(title='提示', message='转换成功!')
+    messagebox.showinfo(title='提示', message='发车成功!')
+
     sys.stdout.flush()
 
 
 def tryBuild(justATry=True):
-    global w, blackLight, defaultWhite, defaultBlack, che50,\
-        blackLight_c, whiteColor, blackColor, scale
+    global w, whiteLight, blackLight, whiteImg, blackImg, whiteColor,\
+        blackColor, blackScale, whiteScale, enableChess, colorfulCar
 
     print('MainWindow_support.tryBuild')
 
-    whiteImg = Image.open(defaultWhite.get())
-    blackImg = Image.open(defaultBlack.get())
-    enableChess = che50.get()
+    _whiteImg = Image.open(whiteImg.get())
+    _blackImg = Image.open(blackImg.get())
 
-    # 预览模式下, 默认不发全车, 提高预览速度
-    if justATry:
-        size = (w.showWhite.winfo_width(), w.showWhite.winfo_height())
-        _scale = min([size[i] / whiteImg.size[i] for i in range(2)])
-    else:
-        _scale = scale.get()
+    _enableChess = enableChess.get()
 
     # 调整大小
-    whiteImg = whiteImg.resize((round(x * _scale) for x in whiteImg.size), Image.ANTIALIAS)
-    blackImg = blackImg.resize((round(x * _scale) for x in blackImg.size), Image.ANTIALIAS)
+    _whiteScale = whiteScale.get()
+    _blackScale = blackScale.get()
+    _whiteImg = _whiteImg.resize((round(x * _whiteScale) for x in _whiteImg.size), Image.ANTIALIAS)
+    _blackImg = _blackImg.resize((round(x * _blackScale) for x in _blackImg.size), Image.ANTIALIAS)
 
-    if w.TNotebook1.tab(w.TNotebook1.select(), "text") == "灰度车":
-        output = MTCore.grayCar(whiteImg, blackImg, blackLight.get(), enableChess)
+    # 预览模式下, 先进行自定义比例的调整, 再以大的图像为标准进行等比例缩小
+    if justATry:
+        size = (w.showWhite.winfo_width(), w.showWhite.winfo_height())
+        _whiteScale = min([size[i] / _whiteImg.size[i] for i in range(2)])
+        _blackScale = min([size[i] / _blackImg.size[i] for i in range(2)])
+        _sacle = min(_whiteScale, _blackScale)
+        _whiteImg = _whiteImg.resize((round(x * _sacle) for x in _whiteImg.size), Image.ANTIALIAS)
+        _blackImg = _blackImg.resize((round(x * _sacle) for x in _blackImg.size), Image.ANTIALIAS)
+
+    if not colorfulCar.get():
+        output = MTCore.grayCar(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), _enableChess)
     else:
-        output = MTCore.colorfulCar(whiteImg, blackImg, blackLight_c.get(), whiteColor.get(), blackColor.get())
+        output = MTCore.colorfulCar(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), whiteColor.get(), blackColor.get())
 
     if justATry:
         w._img = ImageTk.PhotoImage(output, height=size[1], width=size[0])
@@ -153,7 +203,7 @@ def init(top, gui, *args, **kwargs):
     try:
         remu = Image.open('remu.png')
         # TODO: 动态获取
-        size = (340, 484)
+        size = (340, 485)
         scale = min([size[i] / remu.size[i] for i in range(2)])
         remu = remu.resize((round(x * scale) for x in remu.size), Image.ANTIALIAS)
         w._img = ImageTk.PhotoImage(remu)
@@ -163,7 +213,13 @@ def init(top, gui, *args, **kwargs):
     except FileNotFoundError:
         pass
 
-
+    # 居中
+    # TODO: 动态获取
+    width = 807
+    height = 719
+    scrWidth, scrHeight = (root.winfo_screenwidth(), root.winfo_screenheight())
+    tmp = '{}x{}+{}+{}'.format(width, height, (scrWidth - width) // 2, (scrHeight - height) // 2)
+    root.geometry(tmp)
 
 def destroy_window():
     # Function which closes the window.
@@ -174,14 +230,4 @@ def destroy_window():
 if __name__ == '__main__':
     import MainWindow
     MainWindow.vp_start_gui()
-
-
-
-
-
-
-
-
-
-
 

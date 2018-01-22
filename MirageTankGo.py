@@ -5,22 +5,24 @@
 Usage:
     MirageTankGo.py --gui
     MirageTankGo.py -h
-    MirageTankGo.py -o <outputfile> -b <blackImg> <whiteImg> [-s <scale>] ([-l <lit>] [-e]|[-c <lit> <whiteLight> <blackLight>])
+    MirageTankGo.py -o <outputfile> <blackImg> <whiteImg>
+                    [-s <whiteScale> <blackScale>]
+                    [-l <whiteLit> <blackLit>]
+                    [-e | -c <whiteCol> <blackCol>]
     MirageTankGo.py -v
 
 Options:
-    --gui                       以GUI模式启动(需要tkinter支持, Win下自带)
-    -h, --help                  显示本帮助
-    -o                          输出文件(png格式)
-    -s, --scale=<scale>         缩放比例 [default: 1.0]
-    -b                          黑底下显示的图片
-    -l <lit>, --light=<lit>     黑底图片亮度, 取值0~1, 越低越难发现 [default: 0.3].
-    -c                          发彩色车
-    -e                          使用棋盘格
-    -v, --version               显示版本号
+    --gui                以GUI模式启动(需要tkinter支持, Win下自带)
+    -h, --help           显示本帮助
+    -o                   输出文件(png格式)
+    -s                   缩放比例
+    -l                   黑底和白底的亮度, 取值0~1.
+    -e                   使用棋盘格(仅限灰度车)
+    -c                   彩色车的黑底白底色彩保留比例, 取值0~1
+    -v, --version        显示版本号
 
 Examples:
-    python MirageTankGo.py -o remu.png -b black.jpg white.jpg -c 0.18 0.5 0.7
+    python MirageTankGo.py -o remu.png black.jpg white.jpg -s 1 1 -l 1 0.18 -c 0.5 0.7
 
 """
 
@@ -36,8 +38,8 @@ except ImportError:
 # colorfulCar('white.jpg', 'black.jpg', 'output.png', 0.18, 0.5, 0.7)
 
 if __name__ == '__main__':
-    argv = docopt(__doc__, version='1.2.1')
-    # print(argv)
+    argv = docopt(__doc__, version='1.3')
+    print(argv)
     if argv['--gui']:
         import MainWindow
         MainWindow.vp_start_gui()
@@ -45,16 +47,20 @@ if __name__ == '__main__':
         whiteImg = Image.open(argv['<whiteImg>'])
         blackImg = Image.open(argv['<blackImg>'])
 
-        if argv['--scale']:
-            scale = float(argv['--scale'])
-            whiteImg = whiteImg.resize((round(x * scale)
+        if argv['-s']:
+            whiteImg = whiteImg.resize((round(x * float(argv['<whiteScale>']))
                                         for x in whiteImg.size), Image.ANTIALIAS)
-            blackImg = blackImg.resize((round(x * scale)
+            blackImg = blackImg.resize((round(x * float(argv['<blackScale>']))
                                         for x in blackImg.size), Image.ANTIALIAS)
+        if argv['-l']:
+            whiteLit = float(argv['<whiteLit>'])
+            blackLit = float(argv['<blackLit>'])
+        else:
+            whiteLit = 1.0
+            blackLit = 0.5
 
         if argv['-c']:
-            MTCore.colorfulCar(whiteImg, blackImg, float(argv['<lit>']),
-                               float(argv['<whiteLight>']), float(argv['<blackLight>'])).save(argv['<outputfile>'], 'PNG')
+            MTCore.colorfulCar(whiteImg, blackImg, whiteLit, blackLit,
+                               float(argv['<whiteCol>']), float(argv['<blackCol>'])).save(argv['<outputfile>'], 'PNG')
         else:
-            MTCore.grayCar(whiteImg, blackImg, float(
-                argv['--light']), argv['-e']).save(argv['<outputfile>'], 'PNG')
+            MTCore.grayCar(whiteImg, blackImg, whiteLit, blackLit, argv['-e']).save(argv['<outputfile>'], 'PNG')

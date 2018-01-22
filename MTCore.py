@@ -3,7 +3,7 @@ from PIL import ImageEnhance
 
 # 感谢老司机
 # https://zhuanlan.zhihu.com/p/31164700
-def grayCar(whiteImg, blackImg, light=0.3, chess=False):
+def grayCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.3, chess=False):
     """发黑白车"""
     # 加载图像, 转成灰度图
     _im1 = whiteImg.convert('L')
@@ -43,8 +43,8 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
 
     for i in range(width * height):
 
-        p1 = pix1[i]
-        p2 = pix2[i] * light
+        p1 = pix1[i] * whiteLight
+        p2 = pix2[i] * blackLight
 
         a = 1 - p1 / 255.0 + p2 / 255.0
         r = round(p2 / a if not a == 0 else 255)
@@ -57,12 +57,13 @@ def grayCar(whiteImg, blackImg, light=0.3, chess=False):
 
 
 # https://zhuanlan.zhihu.com/p/32532733
-def colorfulCar(whiteImg, blackImg, light, m_colorWhite, m_colorBlack):
+def colorfulCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.18, m_colorWhite=0.5, m_colorBlack=0.7):
     """发彩色车"""
     _im1 = whiteImg.convert('RGB')
     _im2 = blackImg.convert('RGB')
 
-    _im2 = ImageEnhance.Brightness(_im2).enhance(light)
+    _im1 = ImageEnhance.Brightness(_im1).enhance(whiteLight)
+    _im2 = ImageEnhance.Brightness(_im2).enhance(blackLight)
 
     # 将长宽提取提取出来, 提高后面访问的速度
     whiteWidth, whiteHeight = _im1.size

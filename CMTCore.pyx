@@ -11,7 +11,7 @@ cimport cython
 @cython.boundscheck(False)
 @cython.wraparound(False)
 @cython.cdivision(True)
-cpdef grayCar(whiteImg, blackImg, float light=0.3, bint chess=False):
+cpdef grayCar(whiteImg, blackImg, float whiteLight=1.0, float blackLight=0.3, bint chess=False):
     """发黑白车"""
     # 加载图像, 转成灰度图
     _im1 = whiteImg.convert('L')
@@ -56,8 +56,8 @@ cpdef grayCar(whiteImg, blackImg, float light=0.3, bint chess=False):
     cdef float a, p1, p2
     for i in range(width * height):
 
-        p1 = pix1[i] / 255
-        p2 = pix2[i] / 255 * light
+        p1 = pix1[i] / 255 * whiteLight
+        p2 = pix2[i] / 255 * blackLight
 
         a = 1 - p1 + p2
         r = <int>(p2 / a * 255 if not a == 0 else 255)
@@ -72,13 +72,14 @@ cpdef grayCar(whiteImg, blackImg, float light=0.3, bint chess=False):
 @cython.boundscheck(False)
 @cython.wraparound(False)
 @cython.cdivision(True)
-cpdef colorfulCar(whiteImg, blackImg, float light, float m_colorWhite, float m_colorBlack):
+cpdef colorfulCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.18, float m_colorWhite=0.5, float m_colorBlack=0.7):
     """发彩色车"""
     # 加载图像, 转成RGB格式
     _im1 = whiteImg.convert('RGB')
     _im2 = blackImg.convert('RGB')
 
-    _im2 = ImageEnhance.Brightness(_im2).enhance(light)
+    _im1 = ImageEnhance.Brightness(_im1).enhance(whiteLight)
+    _im2 = ImageEnhance.Brightness(_im2).enhance(blackLight)
 
     # 将长宽提取提取出来, 提高后面访问的速度
     cdef int whiteWidth, whiteHeight, blackWidth, blackHeight
