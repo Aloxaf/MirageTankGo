@@ -57,7 +57,7 @@ def grayCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.3, chess=False):
 
 
 # https://zhuanlan.zhihu.com/p/32532733
-def colorfulCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.18, m_colorWhite=0.5, m_colorBlack=0.7):
+def colorfulCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.18, whiteColor=0.5, blackColor=0.7, chess=False):
     """发彩色车"""
     _im1 = whiteImg.convert('RGB')
     _im2 = blackImg.convert('RGB')
@@ -81,9 +81,19 @@ def colorfulCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.18, m_colorWhit
     im2.paste(_im2, ((width - blackWidth) // 2, (height - blackHeight) // 2))
 
     # 根据官方文档的说法, getpixel和putpixel效率太低, 换用getdata和putdata
-    pix1 = im1.getdata()
-    pix2 = im2.getdata()
+    pix1 = list(im1.getdata())
+    pix2 = list(im2.getdata())
     pix3 = []
+
+    # 棋盘格化
+    if chess:
+        for i in range(width * height):
+            x = i // whiteWidth
+            y = i % whiteWidth
+            if (x + y) % 2 == 0:
+                pix1[i] = (255, 255, 255)
+            else:
+                pix2[i] = (0, 0, 0)
 
     for i in range(width * height):
 
@@ -91,15 +101,15 @@ def colorfulCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.18, m_colorWhit
         r2, g2, b2 = [x / 255 for x in pix2[i]]
 
         gray1 = min((r1 * 0.334 + g1 * 0.333 + b1 * 0.333), 1)
-        r1 = r1 * m_colorWhite + gray1 * (1 - m_colorWhite)
-        g1 = g1 * m_colorWhite + gray1 * (1 - m_colorWhite)
-        b1 = b1 * m_colorWhite + gray1 * (1 - m_colorWhite)
+        r1 = r1 * whiteColor + gray1 * (1 - whiteColor)
+        g1 = g1 * whiteColor + gray1 * (1 - whiteColor)
+        b1 = b1 * whiteColor + gray1 * (1 - whiteColor)
         # gray1 = min((r1 * 0.334 + g1 * 0.333 + b1 * 0.333), 1)
 
         gray2 = min((r2 * 0.334 + g2 * 0.333 + b2 * 0.333), 1)
-        r2 = r2 * m_colorBlack + gray2 * (1 - m_colorBlack)
-        g2 = g2 * m_colorBlack + gray2 * (1 - m_colorBlack)
-        b2 = b2 * m_colorBlack + gray2 * (1 - m_colorBlack)
+        r2 = r2 * blackColor + gray2 * (1 - blackColor)
+        g2 = g2 * blackColor + gray2 * (1 - blackColor)
+        b2 = b2 * blackColor + gray2 * (1 - blackColor)
         # gray2 = min((r2 * 0.334 + g2 * 0.333 + b2 * 0.333), 1)
 
         dr = 1 - r1 + r2

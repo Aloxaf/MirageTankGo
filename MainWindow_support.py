@@ -85,10 +85,7 @@ def set_Tk_var():
 def switchColor():
     global w, colorfulCar
     print('MainWindow_support.switchColor')
-    if colorfulCar.get():
-        w.cenableChess.configure(state='disabled')
-    else:
-        w.cenableChess.configure(state='normal')
+    sys.stdout.flush()
 
 def mabout():
     print('MainWindow_support.mabout')
@@ -98,20 +95,6 @@ def mabout():
 def switchGray():
     global w, enableChess
     print('MainWindow_support.switchGray')
-    if enableChess.get():
-        w.ccolorfulCar.configure(state='disabled')
-        w.swhiteColor.configure(state='disabled')
-        w.sblackColor.configure(state='disabled')
-        w.Label11.configure(state='disabled')
-        w.Label12.configure(state='disabled')
-    else:
-        w.ccolorfulCar.configure(state='normal')
-        w.swhiteColor.configure(state='normal')
-        w.sblackColor.configure(state='normal')
-        w.Label11.configure(state='normal')
-        w.Label12.configure(state='normal')
-
-
     sys.stdout.flush()
 
 def blackBrowser():
@@ -182,7 +165,7 @@ def tryBuild(justATry=True):
     if not colorfulCar.get():
         output = MTCore.grayCar(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), _enableChess)
     else:
-        output = MTCore.colorfulCar(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), whiteColor.get(), blackColor.get())
+        output = MTCore.colorfulCar(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), whiteColor.get(), blackColor.get(), _enableChess)
 
     if justATry:
         w._img = ImageTk.PhotoImage(output, height=size[1], width=size[0])
