@@ -13,8 +13,9 @@
 #    Jan 22, 2018 11:28:01 PM
 
 
-import sys
+from operator import methodcaller
 
+import json
 
 try:
     from Tkinter import *
@@ -26,9 +27,9 @@ except ImportError:
     from PIL import ImageTk
 
 try:
-    import CMTCore as MTCore
+    from MTCore import CMTCore as MTCore
 except ImportError:
-    import MTCore
+    from MTCore import MTCore
 
 try:
     import ttk
@@ -40,47 +41,43 @@ except ImportError:
 def set_Tk_var():
     global whiteImg
     whiteImg = StringVar()
-    whiteImg.set('white.jpg')
 
     global blackImg
     blackImg = StringVar()
-    blackImg.set('black.jpg')
 
     global outputImg
     outputImg = StringVar()
-    outputImg.set('remu.png')
 
     global blackLight
     blackLight = DoubleVar()
-    blackLight.set(0.2)
 
     global whiteLight
     whiteLight = DoubleVar()
-    whiteLight.set(1.0)
 
     global whiteColor
     whiteColor = DoubleVar()
-    whiteColor.set(0.5)
 
     global blackColor
     blackColor = DoubleVar()
-    blackColor.set(0.7)
 
     global blackScale
     blackScale = DoubleVar()
-    blackScale.set(1.0)
 
     global whiteScale
     whiteScale = DoubleVar()
-    whiteScale.set(1.0)
 
     global enableChess
     enableChess = BooleanVar()
-    enableChess.set(False)
 
     global colorfulCar
     colorfulCar = BooleanVar()
-    colorfulCar.set(False)
+
+    with open('options.json') as f:
+        options = json.load(f)
+
+    for option, value in options.items():
+        globals()[option].set(value)
+
 
 def switchColor():
     global w, colorfulCar
@@ -129,6 +126,8 @@ def startBuild():
     global w, outputImg
     print('MainWindow_support.startBuild')
 
+    saveOptions()
+
     tryBuild(False).save(outputImg.get(), 'PNG')
 
     messagebox.showinfo(title='提示', message='发车成功!')
@@ -174,6 +173,16 @@ def tryBuild(justATry=True):
 
     sys.stdout.flush()
     return output
+
+def saveOptions():
+
+    option_list = ['whiteImg', 'blackImg', 'outputImg', 'whiteLight', 'blackLight', 'whiteColor', 'blackColor',
+                   'whiteScale', 'blackScale', 'enableChess', 'colorfulCar']
+
+    options = {option: globals()[option].get() for option in option_list}
+
+    with open('options.json', 'w') as f:
+        json.dump(options, f, indent=2)
 
 
 def init(top, gui, *args, **kwargs):

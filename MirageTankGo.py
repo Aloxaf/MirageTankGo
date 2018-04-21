@@ -35,9 +35,9 @@ from docopt import docopt
 from PIL import Image
 
 try:
-    import CMTCore as MTCore
+    from MTCore import CMTCore as MTCore
 except ImportError:
-    import MTCore
+    from MTCore import MTCore
 
 
 if __name__ == '__main__':
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     kwargs = {}
 
     if argv['--gui']:
-        import MainWindow
+        from GUI import MainWindow
         MainWindow.vp_start_gui()
     else:
         whiteImg = Image.open(argv['WHITEIMG'])

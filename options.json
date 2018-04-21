@@ -1,0 +1,13 @@
+{
+  "whiteImg": "white.jpg",
+  "blackImg": "black.jpg",
+  "outputImg": "remu.png",
+  "whiteLight": 1.0,
+  "blackLight": 0.2,
+  "whiteColor": 0.5,
+  "blackColor": 0.7,
+  "whiteScale": 1.0,
+  "blackScale": 1.0,
+  "enableChess": false,
+  "colorfulCar": false
+}

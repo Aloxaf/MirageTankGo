@@ -17,7 +17,7 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = 1
 
-import MainWindow_support
+from GUI import MainWindow_support
 
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
@@ -288,11 +288,6 @@ class MirageTankGoGUI:
                 font="TkMenuFont",
                 foreground="#000000",
                 label="关于")
-
-
-
-
-
 
 
 if __name__ == '__main__':
