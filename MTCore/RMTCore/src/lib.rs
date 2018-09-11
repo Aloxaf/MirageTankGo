@@ -1,3 +1,4 @@
+//! 幻影坦克车库
 extern crate image;
 
 use image::*;
@@ -10,21 +11,16 @@ pub struct MirageTank {
     height: u32,
 }
 
-use std::time::SystemTime;
-
 impl MirageTank {
     fn resize(img: &DynamicImage, scale: f32) -> DynamicImage {
         // 缩放非常耗时, 1.0 就不缩放了
-        if scale == 1.0 {
+        if (scale - 1.0).abs() < std::f32::EPSILON {
             return img.clone()
         }
         let (width, height) = img.dimensions();
         let width = (width as f32 * scale).round() as u32;
         let height = (height as f32 * scale).round() as u32;
-        let time = SystemTime::now();
-        let img = img.resize(width, height, imageops::CatmullRom);
-        println!("{:?}", time.elapsed());
-        img
+        img.resize(width, height, imageops::CatmullRom)
     }
 
     fn greyize(rgba1: Rgba<u8>, rgba2: Rgba<u8>, wlight: f32, blight: f32) -> Rgba<u8>  {
@@ -103,7 +99,7 @@ impl MirageTank {
         })
     }
 
-
+    /// 棋盘格化
     pub fn checkerboarding(&mut self) {
         for w in 0..self.width {
             for h in 0..self.height {
@@ -116,6 +112,7 @@ impl MirageTank {
         }
     }
 
+    /// 发黑白车
     pub fn greycarize(&mut self, wlight: f32, blight: f32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
         let mut outpixels = Vec::new();
         for (&p1, &p2) in self.wimg.pixels().zip(self.bimg.pixels()) {
@@ -125,6 +122,7 @@ impl MirageTank {
         ImageBuffer::from_raw(self.width, self.height, outpixels).unwrap()
     }
 
+    /// 发彩色车
     pub fn colorcarize(
         &self,
         wlight: f32,

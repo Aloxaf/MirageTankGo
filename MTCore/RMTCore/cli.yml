@@ -1,0 +1,54 @@
+name: mirage_tank
+version: "1.0"
+author: Aloxaf <aloxafx@gmail.com>
+about: 幻影坦克快速发车工具
+args:
+  - wimage:
+      help: 白底下显示的图片(表层)
+      required: true
+      index: 1
+  - bimage:
+      help: 黑底下显示的图片(里层)
+      required: true
+      index: 2
+  - output:
+      short: o
+      long: output
+      help: 输出文件, png 格式 (默认 output.png)
+      takes_value: true
+  - sparse:
+      short: s
+      long: sparse
+      help: 启用棋盘格化渲染
+  - colorful:
+      short: c
+      long: colorful
+      help: 发彩色车 (默认黑白)
+  - wscale:
+      long: wscale
+      help: 白底图像缩放比例 (默认 1.0)
+      takes_value: true
+  - bscale:
+      long: bscale
+      help: 黑底图像缩放比例 (默认 1.0)
+      takes_value: true
+  - wlight:
+      long: wlight
+      help: 白底图像亮度 (默认 1.0)
+      takes_value: true
+  - blight:
+      long: blight
+      help: 黑底图像亮度 (默认 0.2)
+      takes_value: true
+  - wcolor:
+      long: wcolor
+      help: 白底图像色彩保留比例 (默认 0.5)
+      takes_value: true
+  - bcolor:
+      long: bcolor
+      help: 黑底图像色彩保留比例 (默认 0.7)
+      takes_value: true
+  - force:
+      short: f
+      long: force
+      help: 不询问直接覆盖文件
