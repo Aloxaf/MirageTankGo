@@ -12,10 +12,14 @@ pub struct MirageTank {
 
 impl MirageTank {
 
-    // TODO: 统一图片大小
-    pub fn open(wimg: &str, bimg: &str) -> Result<MirageTank, ImageError> {
-        let _wimg = image::open(wimg)?;
-        let _bimg = image::open(bimg)?;
+    pub fn open(
+        wimg: &str,
+        bimg: &str,
+        wscale: f32,
+        bscale: f32
+    ) -> Result<MirageTank, ImageError> {
+        let _wimg = MirageTank::resize(&image::open(wimg)?, wscale);
+        let _bimg = MirageTank::resize(&image::open(bimg)?, bscale);
 
         let (wwidth, wheight) = _wimg.dimensions();
         let (bwidth, bheight) = _bimg.dimensions();
@@ -25,6 +29,14 @@ impl MirageTank {
 
         let mut wimg = DynamicImage::new_rgba8(width, height);
         let mut bimg = DynamicImage::new_rgba8(width, height);
+        
+
+        for w in 0..width {
+            for h in 0..height {
+                wimg.put_pixel(w, h, Rgba { data: [255, 255, 255, 255] });
+                bimg.put_pixel(w, h, Rgba { data: [0, 0, 0, 0] });
+            }
+        }
 
         wimg.copy_from(&_wimg, (width - wwidth) / 2, (height - wheight) / 2);
         bimg.copy_from(&_bimg, (width - bwidth) / 2, (height - bheight) / 2);
@@ -35,6 +47,13 @@ impl MirageTank {
             width,
             height
         })
+    }
+
+    fn resize(img: &DynamicImage, scale: f32) -> DynamicImage {
+        let (width, height) = img.dimensions();
+        let width = (width as f32 * scale).round() as u32;
+        let height = (height as f32 * scale).round() as u32;
+        img.resize(width, height, imageops::Gaussian)
     }
 
     fn greyize(&self, rgba1: Rgba<u8>, rgba2: Rgba<u8>, wlight: f32, blight: f32) -> Rgba<u8>  {

@@ -59,7 +59,10 @@ fn main() {
 
     // println!("{:?}", args);
 
-    let mut tank = MirageTank::open(&args.arg_whiteimg, &args.arg_blackimg).unwrap_or_else( |e| {
+    let mut tank = MirageTank::open(&args.arg_whiteimg,
+                                    &args.arg_blackimg,
+                                    args.flag_wscale,
+                                    args.flag_bscale).unwrap_or_else( |e| {
         eprintln!("fail to load file: {}", e);
         process::exit(1);
     });
@@ -74,9 +77,13 @@ fn main() {
         tank.greycarize(args.flag_wlight, args.flag_blight)
     };
 
-    output.save(args.arg_output).unwrap_or_else(|e| {
-        eprintln!("fail to save file: {}", e);
-        process::exit(1);
-    });
+    if args.arg_output == "-" {
+        unimplemented!();
+    } else {
+        output.save(args.arg_output).unwrap_or_else(|e| {
+            eprintln!("fail to save file: {}", e);
+            process::exit(1);
+        });
+    }
 
 }
