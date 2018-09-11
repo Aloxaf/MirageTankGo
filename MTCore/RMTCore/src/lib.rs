@@ -4,59 +4,30 @@ use image::*;
 use image::Rgba;
 
 pub struct MirageTank {
-    wimg: DynamicImage,
-    bimg: DynamicImage,
+    wimg: ImageBuffer<Rgba<u8>, Vec<u8>>,
+    bimg: ImageBuffer<Rgba<u8>, Vec<u8>>,
     width: u32,
     height: u32,
 }
 
+use std::time::SystemTime;
+
 impl MirageTank {
-
-    pub fn open(
-        wimg: &str,
-        bimg: &str,
-        wscale: f32,
-        bscale: f32
-    ) -> Result<MirageTank, ImageError> {
-        let _wimg = MirageTank::resize(&image::open(wimg)?, wscale);
-        let _bimg = MirageTank::resize(&image::open(bimg)?, bscale);
-
-        let (wwidth, wheight) = _wimg.dimensions();
-        let (bwidth, bheight) = _bimg.dimensions();
-
-        let width = std::cmp::max(wwidth, bwidth);
-        let height = std::cmp::max(wheight, bheight);
-
-        let mut wimg = DynamicImage::new_rgba8(width, height);
-        let mut bimg = DynamicImage::new_rgba8(width, height);
-        
-
-        for w in 0..width {
-            for h in 0..height {
-                wimg.put_pixel(w, h, Rgba { data: [255, 255, 255, 255] });
-                bimg.put_pixel(w, h, Rgba { data: [0, 0, 0, 0] });
-            }
-        }
-
-        wimg.copy_from(&_wimg, (width - wwidth) / 2, (height - wheight) / 2);
-        bimg.copy_from(&_bimg, (width - bwidth) / 2, (height - bheight) / 2);
-
-        Ok(MirageTank {
-            wimg,
-            bimg,
-            width,
-            height
-        })
-    }
-
     fn resize(img: &DynamicImage, scale: f32) -> DynamicImage {
+        // 缩放非常耗时, 1.0 就不缩放了
+        if scale == 1.0 {
+            return img.clone()
+        }
         let (width, height) = img.dimensions();
         let width = (width as f32 * scale).round() as u32;
         let height = (height as f32 * scale).round() as u32;
-        img.resize(width, height, imageops::Gaussian)
+        let time = SystemTime::now();
+        let img = img.resize(width, height, imageops::CatmullRom);
+        println!("{:?}", time.elapsed());
+        img
     }
 
-    fn greyize(&self, rgba1: Rgba<u8>, rgba2: Rgba<u8>, wlight: f32, blight: f32) -> Rgba<u8>  {
+    fn greyize(rgba1: Rgba<u8>, rgba2: Rgba<u8>, wlight: f32, blight: f32) -> Rgba<u8>  {
         let c1 = f32::from(rgba1.to_luma().data[0]) / 255.0 * wlight;
         let c2 = f32::from(rgba2.to_luma().data[0]) / 255.0 * blight;
 
@@ -69,7 +40,7 @@ impl MirageTank {
         Rgba { data: [r, r, r, a] }
     }
 
-    fn colorize(&self, rgba1: Rgba<u8>, rgba2: Rgba<u8>, wlight: f32, blight: f32, wcolor: f32, bcolor: f32) -> Rgba<u8> {
+    fn colorize(rgba1: Rgba<u8>, rgba2: Rgba<u8>, wlight: f32, blight: f32, wcolor: f32, bcolor: f32) -> Rgba<u8> {
         // turn 0~255 to 0~1 and change light
         let rgb1 = rgba1.to_rgb().data.iter().map(|&c| {
             (f32::from(c) / 255.0 * wlight).min(1.0)
@@ -97,6 +68,42 @@ impl MirageTank {
         Rgba { data: [r, g, b, (a * 255.0).round() as u8] }
     }
 
+}
+
+
+impl MirageTank {
+
+    pub fn open(
+        wimg: &str,
+        bimg: &str,
+        wscale: f32,
+        bscale: f32
+    ) -> Result<MirageTank, ImageError> {
+        let _wimg = MirageTank::resize(&image::open(wimg)?, wscale);
+        let _bimg = MirageTank::resize(&image::open(bimg)?, bscale);
+
+        let (wwidth, wheight) = _wimg.dimensions();
+        let (bwidth, bheight) = _bimg.dimensions();
+
+        let width = std::cmp::max(wwidth, bwidth);
+        let height = std::cmp::max(wheight, bheight);
+
+        let size = (width * height * 4) as usize;
+        let mut wimg: ImageBuffer<Rgba<u8>, Vec<u8>> = ImageBuffer::from_raw(width, height, vec![255; size]).unwrap();
+        let mut bimg: ImageBuffer<Rgba<u8>, Vec<u8>> = ImageBuffer::from_raw(width, height, vec![0; size]).unwrap();
+
+        wimg.copy_from(&_wimg, (width - wwidth) / 2, (height - wheight) / 2);
+        bimg.copy_from(&_bimg, (width - bwidth) / 2, (height - bheight) / 2);
+
+        Ok(MirageTank {
+            wimg,
+            bimg,
+            width,
+            height
+        })
+    }
+
+
     pub fn checkerboarding(&mut self) {
         for w in 0..self.width {
             for h in 0..self.height {
@@ -109,35 +116,28 @@ impl MirageTank {
         }
     }
 
-    pub fn greycarize(&mut self, wlight: f32, blight: f32) -> DynamicImage {
-        let mut outimg = DynamicImage::new_rgba8(self.width, self.height);
-
-        for w in 0..self.width {
-            for h in 0..self.height {
-                let c = self.greyize(self.wimg.get_pixel(w, h),
-                                     self.bimg.get_pixel(w, h),
-                                     wlight,
-                                     blight);
-                outimg.put_pixel(w, h, c);
-            }
+    pub fn greycarize(&mut self, wlight: f32, blight: f32) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+        let mut outpixels = Vec::new();
+        for (&p1, &p2) in self.wimg.pixels().zip(self.bimg.pixels()) {
+            let c = MirageTank::greyize(p1, p2, wlight, blight);
+            outpixels.extend(c.data.iter());
         }
-
-        outimg
+        ImageBuffer::from_raw(self.width, self.height, outpixels).unwrap()
     }
 
-    pub fn colorcarize(&self, wlight: f32, blight: f32, wcolor: f32, bcolor: f32) -> DynamicImage {
-        let mut outimg = DynamicImage::new_rgba8(self.width, self.height);
-
-        for w in 0..self.width {
-            for h in 0..self.height {
-                let c = self.colorize(self.wimg.get_pixel(w, h),
-                                      self.bimg.get_pixel(w, h),
-                                      wlight, blight, wcolor, bcolor);
-                outimg.put_pixel(w, h, c);
-            }
+    pub fn colorcarize(
+        &self,
+        wlight: f32,
+        blight: f32,
+        wcolor: f32,
+        bcolor: f32
+    ) -> ImageBuffer<Rgba<u8>, Vec<u8>> {
+        let mut outpixels = Vec::new();
+        for (&p1, &p2) in self.wimg.pixels().zip(self.bimg.pixels()) {
+            let c = MirageTank::colorize(p1, p2, wlight, blight, wcolor, bcolor);
+            outpixels.extend(c.data.iter());
         }
-
-        outimg
+        ImageBuffer::from_raw(self.width, self.height, outpixels).unwrap()
     }
 }
 
