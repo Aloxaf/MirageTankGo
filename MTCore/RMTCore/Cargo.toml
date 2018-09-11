@@ -1,0 +1,15 @@
+[package]
+name = "mirage_tank"
+version = "0.1.0"
+authors = ["Aloxaf <bailong104@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+image = "0.19.0"
+docopt = "1.0.1"
+serde_derive = "1.0.78"
+serde = "1.0.78"
+
+[profile.release]
+lto = true
+opt-level = 3

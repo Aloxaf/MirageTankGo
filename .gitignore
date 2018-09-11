@@ -1,5 +1,12 @@
 __pycache__/
+
 .idea/
+.directory
+
 *.so
 *.o
 *.c
+
+target/
+**/*.rs.bk
+
