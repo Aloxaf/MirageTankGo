@@ -44,10 +44,12 @@ args:
       long: wcolor
       help: 白底图像色彩保留比例 (默认 0.5)
       takes_value: true
+      requires: colorful
   - bcolor:
       long: bcolor
       help: 黑底图像色彩保留比例 (默认 0.7)
       takes_value: true
+      requires: colorful
   - force:
       short: f
       long: force
