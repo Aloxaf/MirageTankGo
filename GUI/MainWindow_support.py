@@ -11,7 +11,7 @@
 #    Jan 22, 2018 09:45:46 PM
 #    Jan 22, 2018 10:17:40 PM
 #    Jan 22, 2018 11:28:01 PM
-
+#    Aug 20, 2019 01:11:03 PM
 
 from operator import methodcaller
 
@@ -79,9 +79,41 @@ def set_Tk_var():
         globals()[option].set(value)
 
 
+
+def bcolor():
+    print('MainWindow_support.bcolor')
+    tryBuild()
+    sys.stdout.flush()
+
+def blight():
+    print('MainWindow_support.blight')
+    tryBuild()
+    sys.stdout.flush()
+
+def bscale():
+    print('MainWindow_support.bscale')
+    tryBuild()
+    sys.stdout.flush()
+
+def wcolor():
+    print('MainWindow_support.wcolor')
+    tryBuild()
+    sys.stdout.flush()
+
+def wlight():
+    print('MainWindow_support.wlight')
+    tryBuild()
+    sys.stdout.flush()
+
+def wscale():
+    print('MainWindow_support.wscale')
+    tryBuild()
+    sys.stdout.flush()
+
 def switchColor():
     global w, colorfulCar
     print('MainWindow_support.switchColor')
+    tryBuild()
     sys.stdout.flush()
 
 def mabout():
@@ -92,6 +124,7 @@ def mabout():
 def switchGray():
     global w, enableChess
     print('MainWindow_support.switchGray')
+    tryBuild()
     sys.stdout.flush()
 
 def blackBrowser():
@@ -121,7 +154,6 @@ def outputBrowser():
         w.eoutputImg.insert(0, filename)
     sys.stdout.flush()
 
-
 def startBuild():
     global w, outputImg
     print('MainWindow_support.startBuild')
@@ -133,7 +165,6 @@ def startBuild():
     messagebox.showinfo(title='提示', message='发车成功!')
 
     sys.stdout.flush()
-
 
 def tryBuild(justATry=True):
     global w, whiteLight, blackLight, whiteImg, blackImg, whiteColor,\
@@ -184,7 +215,6 @@ def saveOptions():
     with open('options.json', 'w') as f:
         json.dump(options, f, indent=2)
 
-
 def init(top, gui, *args, **kwargs):
     global w, top_level, root
     w = gui
@@ -222,4 +252,11 @@ def destroy_window():
 if __name__ == '__main__':
     import MainWindow
     MainWindow.vp_start_gui()
+
+
+
+
+
+
+
 

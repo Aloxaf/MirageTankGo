@@ -65,7 +65,7 @@ proc vTclWindow.top37 {base} {
     vTcl::widgets::core::toplevel::createCmd $top -class Toplevel \
         -menu "$top.m38" -background {#d9d9d9} -highlightcolor black 
     wm focusmodel $top passive
-    wm geometry $top 807x719+381+180
+    wm geometry $top 807x719+455+147
     update
     # set in toplevel.wgt.
     global vTcl
@@ -109,8 +109,9 @@ proc vTclWindow.top37 {base} {
         -highlightcolor black -justify left -text 启用棋盘格 -variable enableChess 
     vTcl:DefineAlias "$site_3_0.che42" "cenableChess" vTcl:WidgetProc "$top" 1
     checkbutton $site_3_0.che43 \
+        -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -command switchColor -foreground {#000000} \
-        -justify left -text 发彩色车 -variable colorfulCar 
+        -highlightcolor black -justify left -text 发彩色车 -variable colorfulCar 
     vTcl:DefineAlias "$site_3_0.che43" "ccolorfulCar" vTcl:WidgetProc "$top" 1
     label $site_3_0.lab44 \
         -activebackground {#f9f9f9} -activeforeground black \
@@ -123,12 +124,16 @@ proc vTclWindow.top37 {base} {
         -text 黑底色彩: 
     vTcl:DefineAlias "$site_3_0.lab45" "Label12" vTcl:WidgetProc "$top" 1
     spinbox $site_3_0.spi46 \
-        -background white -foreground black -increment 0.01 -justify right \
-        -textvariable whiteColor -to 1.0 
+        -activebackground {#f9f9f9} -background white -command wcolor \
+        -foreground black -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable whiteColor -to 1.0 
     vTcl:DefineAlias "$site_3_0.spi46" "swhiteColor" vTcl:WidgetProc "$top" 1
     spinbox $site_3_0.spi47 \
-        -background white -foreground black -increment 0.01 -justify right \
-        -textvariable blackColor -to 1.0 
+        -activebackground {#f9f9f9} -background white -command bcolor \
+        -foreground black -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable blackColor -to 1.0 
     vTcl:DefineAlias "$site_3_0.spi47" "sblackColor" vTcl:WidgetProc "$top" 1
     label $site_3_0.lab48 \
         -activebackground {#f9f9f9} -activeforeground black \
@@ -151,23 +156,28 @@ proc vTclWindow.top37 {base} {
         -text 黑底亮度: 
     vTcl:DefineAlias "$site_3_0.lab51" "Label9" vTcl:WidgetProc "$top" 1
     spinbox $site_3_0.spi52 \
-        -background white -foreground black -from 0.01 -increment 0.01 \
-        -justify right -textvariable whiteScale -to 1.0 
+        -activebackground {#f9f9f9} -background white -command wscale \
+        -foreground black -from 0.01 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable whiteScale -to 1.0 
     vTcl:DefineAlias "$site_3_0.spi52" "swhiteScale" vTcl:WidgetProc "$top" 1
     spinbox $site_3_0.spi53 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.01 -increment 0.01 -justify right -textvariable blackScale \
-        -to 1.0 
+        -activebackground {#f9f9f9} -background white -command bscale \
+        -foreground black -from 0.01 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable blackScale -to 1.0 
     vTcl:DefineAlias "$site_3_0.spi53" "sblackScale" vTcl:WidgetProc "$top" 1
     spinbox $site_3_0.spi54 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -increment 0.01 -justify right -textvariable whiteLight \
-        -to 1.0 
+        -activebackground {#f9f9f9} -background white -command wlight \
+        -foreground black -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable whiteLight -to 1.0 
     vTcl:DefineAlias "$site_3_0.spi54" "swhiteLight" vTcl:WidgetProc "$top" 1
     spinbox $site_3_0.spi55 \
-        -activebackground {#f9f9f9} -background white -foreground black \
-        -from 0.0 -increment 0.01 -justify right -textvariable blackLight \
-        -to 1.0 
+        -activebackground {#f9f9f9} -background white -command blight \
+        -foreground black -from 0.0 -highlightcolor black -increment 0.01 \
+        -insertbackground black -justify right -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable blackLight -to 1.0 
     vTcl:DefineAlias "$site_3_0.spi55" "sblackLight" vTcl:WidgetProc "$top" 1
     place $site_3_0.che42 \
         -in $site_3_0 -x 6 -y 12 -width 105 -height 26 -anchor nw \
@@ -217,42 +227,59 @@ proc vTclWindow.top37 {base} {
     vTcl:DefineAlias "$top.fra67" "Frame3" vTcl:WidgetProc "$top" 1
     set site_3_0 $top.fra67
     label $site_3_0.lab57 \
-        -background {#d9d9d9} -foreground {#000000} -text 白底图片: 
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 白底图片: 
     vTcl:DefineAlias "$site_3_0.lab57" "Label1" vTcl:WidgetProc "$top" 1
     entry $site_3_0.ent60 \
-        -background white -foreground {#000000} -textvariable whiteImg 
+        -background white -foreground {#000000} -highlightcolor black \
+        -insertbackground black -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable whiteImg 
     vTcl:DefineAlias "$site_3_0.ent60" "ewhiteImg" vTcl:WidgetProc "$top" 1
     entry $site_3_0.ent61 \
-        -background white -foreground {#000000} -textvariable blackImg 
+        -background white -foreground {#000000} -highlightcolor black \
+        -insertbackground black -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable blackImg 
     vTcl:DefineAlias "$site_3_0.ent61" "eblackImg" vTcl:WidgetProc "$top" 1
     entry $site_3_0.ent62 \
-        -background white -foreground {#000000} -textvariable outputImg 
+        -background white -foreground {#000000} -highlightcolor black \
+        -insertbackground black -selectbackground {#c4c4c4} \
+        -selectforeground black -textvariable outputImg 
     vTcl:DefineAlias "$site_3_0.ent62" "eoutputImg" vTcl:WidgetProc "$top" 1
     button $site_3_0.but63 \
+        -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -command whiteBrowser -foreground {#000000} \
-        -text 浏览.. 
+        -highlightcolor black -text 浏览.. 
     vTcl:DefineAlias "$site_3_0.but63" "bwhiteBrowse" vTcl:WidgetProc "$top" 1
     button $site_3_0.but64 \
+        -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -command blackBrowser -foreground {#000000} \
-        -text 浏览.. 
+        -highlightcolor black -text 浏览.. 
     vTcl:DefineAlias "$site_3_0.but64" "bblackBrowse" vTcl:WidgetProc "$top" 1
     button $site_3_0.but68 \
+        -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -command outputBrowser -foreground {#000000} \
-        -text 浏览.. 
+        -highlightcolor black -text 浏览.. 
     vTcl:DefineAlias "$site_3_0.but68" "boutputBrowse" vTcl:WidgetProc "$top" 1
     button $site_3_0.but69 \
+        -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -command tryBuild -foreground {#000000} \
-        -text 试驾 
+        -highlightcolor black -text 试驾 
     vTcl:DefineAlias "$site_3_0.but69" "btryBuild" vTcl:WidgetProc "$top" 1
     button $site_3_0.but70 \
+        -activebackground {#f9f9f9} -activeforeground black \
         -background {#d9d9d9} -command startBuild -foreground {#000000} \
-        -text 开始发车! 
+        -highlightcolor black -text 开始发车! 
     vTcl:DefineAlias "$site_3_0.but70" "bstartBuild" vTcl:WidgetProc "$top" 1
     label $site_3_0.lab71 \
-        -background {#d9d9d9} -foreground {#000000} -text 黑底图片: 
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 黑底图片: 
     vTcl:DefineAlias "$site_3_0.lab71" "Label2" vTcl:WidgetProc "$top" 1
     label $site_3_0.lab72 \
-        -background {#d9d9d9} -foreground {#000000} -text 输出图片: 
+        -activebackground {#f9f9f9} -activeforeground black \
+        -background {#d9d9d9} -foreground {#000000} -highlightcolor black \
+        -text 输出图片: 
     vTcl:DefineAlias "$site_3_0.lab72" "Label3" vTcl:WidgetProc "$top" 1
     place $site_3_0.lab57 \
         -in $site_3_0 -x 22 -y 12 -width 68 -height 24 -anchor nw \

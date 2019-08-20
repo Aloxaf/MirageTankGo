@@ -40,12 +40,6 @@
     Examples:
         python MirageTankGo.py -o remu.png black.jpg white.jpg -s 1 1 -l 1 0.18 -c 0.5 0.7
 
-## 加速(推荐)
-
-安装[cython](http://cython.org/).
-
-可编译生成优化后的CMTCore, 大幅提高车速.
-
 
 ## 示例
 
@@ -78,5 +72,5 @@
 + python3
 + docopt
 + Pillow
-+ cython (可选, 可提高车速)
++ numpy
 + tkinter (可选, windows下自带)
