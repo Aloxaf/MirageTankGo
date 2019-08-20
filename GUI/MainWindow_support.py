@@ -162,9 +162,9 @@ def tryBuild(justATry=True):
         _blackImg = _blackImg.resize((round(x * _sacle) for x in _blackImg.size), Image.ANTIALIAS)
 
     if not colorfulCar.get():
-        output = MTCore.grayCar(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), _enableChess)
+        output = MTCore.gray_car(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), _enableChess)
     else:
-        output = MTCore.colorfulCar(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), whiteColor.get(), blackColor.get(), _enableChess)
+        output = MTCore.color_car(_whiteImg, _blackImg, whiteLight.get(), blackLight.get(), whiteColor.get(), blackColor.get(), _enableChess)
 
     if justATry:
         w._img = ImageTk.PhotoImage(output, height=size[1], width=size[0])

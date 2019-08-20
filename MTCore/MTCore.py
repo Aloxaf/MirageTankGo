@@ -1,133 +1,144 @@
 from PIL import Image
 from PIL import ImageEnhance
+from typing import *
+import numpy as np
+
+
+np.seterr(divide="ignore", invalid="ignore")
+
+
+def resize_image(im1: Image.Image, im2: Image.Image, mode: str) -> Tuple[Image.Image, Image.Image]:
+    """
+    统一图像大小
+    """
+    _wimg = im1.convert(mode)
+    _bimg = im2.convert(mode)
+
+    wwidth, wheight = _wimg.size
+    bwidth, bheight = _bimg.size
+
+    width = max(wwidth, bwidth)
+    height = max(wheight, bheight)
+
+    wimg = Image.new(mode, (width, height), 255)
+    bimg = Image.new(mode, (width, height), 0)
+
+    wimg.paste(_wimg, ((width - wwidth) // 2, (height - wheight) // 2))
+    bimg.paste(_bimg, ((width - bwidth) // 2, (height - bheight) // 2))
+
+    return wimg, bimg
+
 
 # 感谢老司机
 # https://zhuanlan.zhihu.com/p/31164700
-def grayCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.3, chess=False):
-    """发黑白车"""
-    # 加载图像, 转成灰度图
-    _im1 = whiteImg.convert('L')
-    _im2 = blackImg.convert('L')
+def gray_car(
+    wimg: Image.Image,
+    bimg: Image.Image,
+    wlight: float = 1.0,
+    blight: float = 0.3,
+    chess: bool = False,
+) -> Image.Image:
+    """
+    发黑白车
+    :param wimg: 白色背景下的图片
+    :param bimg: 黑色背景下的图片
+    :param wlight: wimg 的亮度
+    :param blight: bimg 的亮度
+    :param chess: 是否棋盘格化
+    :return: 处理后的图像
+    """
+    wimg, bimg = resize_image(wimg, bimg, "L")
 
-    # 保证生成的图像够大
-    whiteWidth, whiteHeight = _im1.size
-    blackWidth, blackHeight = _im2.size
-
-    width = max(whiteWidth, blackWidth)
-    height = max(whiteHeight, blackHeight)
-
-
-    # 建立新的, 大小合适图片
-    im3 = Image.new('RGBA', (width, height))
-    im1 = Image.new('L', (width, height), 255)
-    im2 = Image.new('L', (width, height), 0)
-
-    # 将原图复制到新图像里面
-    im1.paste(_im1, ((width - whiteWidth) // 2, (height - whiteHeight) // 2))
-    im2.paste(_im2, ((width - blackWidth) // 2, (height - blackHeight) // 2))
-
-    # 根据官方文档的说法, getpixel和putpixel效率太低, 换用getdata和putdata
-    pix1 = list(im1.getdata())
-    pix2 = list(im2.getdata())
-    pix3 = []
+    wpix = np.array(wimg).astype("float64")
+    bpix = np.array(bimg).astype("float64")
 
     # 棋盘格化
+    # 规则: if (x + y) % 2 == 0 { wpix[x][y] = 255 } else { bpix[x][y] = 0 }
     if chess:
-        for i in range(width * height):
-            x = i // whiteWidth
-            y = i % whiteWidth
-            if (x + y) % 2 == 0:
-                pix1[i] = 255
-            else:
-                pix2[i] = 0
+        wpix[::2, ::2] = 255.0
+        bpix[1::2, 1::2] = 0.0
 
-    for i in range(width * height):
+    wpix *= wlight
+    bpix *= blight
 
-        p1 = pix1[i] * whiteLight
-        p2 = pix2[i] * blackLight
+    a = 1.0 - wpix / 255.0 + bpix / 255.0
+    r = np.where(a != 0, bpix / a, 255.0)
 
-        a = 1 - p1 / 255.0 + p2 / 255.0
-        r = round(p2 / a if not a == 0 else 255)
+    pixels = np.dstack((r, r, r, a * 255.0))
 
-        pix3.append((r, r, r, int(a * 255)))
+    pixels[pixels > 255] = 255
 
-    im3.putdata(pix3)
-
-    return im3
+    return Image.fromarray(pixels.astype("uint8"), "RGBA")
 
 
 # https://zhuanlan.zhihu.com/p/32532733
-def colorfulCar(whiteImg, blackImg, whiteLight=1.0, blackLight=0.18, whiteColor=0.5, blackColor=0.7, chess=False):
-    """发彩色车"""
-    _im1 = whiteImg.convert('RGB')
-    _im2 = blackImg.convert('RGB')
+def color_car(
+    wimg: Image.Image,
+    bimg: Image.Image,
+    wlight: float = 1.0,
+    blight: float = 0.18,
+    wcolor: float = 0.5,
+    bcolor: float = 0.7,
+    chess: bool = False,
+) -> Image.Image:
+    """
+    发彩色车
+    :param wimg: 白色背景下的图片
+    :param bimg: 黑色背景下的图片
+    :param wlight: wimg 的亮度
+    :param blight: bimg 的亮度
+    :param wcolor: wimg 的色彩保留比例
+    :param bcolor: bimg 的色彩保留比例
+    :param chess: 是否棋盘格化
+    :return: 处理后的图像
+    """
+    wimg = ImageEnhance.Brightness(wimg).enhance(wlight)
+    bimg = ImageEnhance.Brightness(bimg).enhance(blight)
 
-    _im1 = ImageEnhance.Brightness(_im1).enhance(whiteLight)
-    _im2 = ImageEnhance.Brightness(_im2).enhance(blackLight)
+    wimg, bimg = resize_image(wimg, bimg, "RGB")
 
-    # 将长宽提取提取出来, 提高后面访问的速度
-    whiteWidth, whiteHeight = _im1.size
-    blackWidth, blackHeight = _im2.size
-    width = max(whiteWidth, blackWidth)
-    height = max(whiteHeight, blackHeight)
+    wpix = np.array(wimg).astype("float64")
+    bpix = np.array(bimg).astype("float64")
 
-    # 建立新的, 大小合适图片
-    im3 = Image.new('RGBA', (width, height))
-    im1 = Image.new('RGB', (width, height), (255, 255, 255))
-    im2 = Image.new('RGB', (width, height), (0, 0, 0))
-
-    # 将原图复制到新图像里面
-    im1.paste(_im1, ((width - whiteWidth) // 2, (height - whiteHeight) // 2))
-    im2.paste(_im2, ((width - blackWidth) // 2, (height - blackHeight) // 2))
-
-    # 根据官方文档的说法, getpixel和putpixel效率太低, 换用getdata和putdata
-    pix1 = list(im1.getdata())
-    pix2 = list(im2.getdata())
-    pix3 = []
-
-    # 棋盘格化
     if chess:
-        for i in range(width * height):
-            x = i // whiteWidth
-            y = i % whiteWidth
-            if (x + y) % 2 == 0:
-                pix1[i] = (255, 255, 255)
-            else:
-                pix2[i] = (0, 0, 0)
+        wpix[::2, ::2] = [255., 255., 255.]
+        bpix[1::2, 1::2] = [0., 0., 0.]
 
-    for i in range(width * height):
+    wpix /= 255.
+    bpix /= 255.
 
-        r1, g1, b1 = [x / 255 for x in pix1[i]]
-        r2, g2, b2 = [x / 255 for x in pix2[i]]
+    wgray = wpix[:, :, 0] * 0.334 + wpix[:, :, 1] * 0.333 + wpix[:, :, 2] * 0.333
+    wpix *= wcolor
+    wpix[:, :, 0] += wgray * (1. - wcolor)
+    wpix[:, :, 1] += wgray * (1. - wcolor)
+    wpix[:, :, 2] += wgray * (1. - wcolor)
 
-        gray1 = min((r1 * 0.334 + g1 * 0.333 + b1 * 0.333), 1)
-        r1 = r1 * whiteColor + gray1 * (1 - whiteColor)
-        g1 = g1 * whiteColor + gray1 * (1 - whiteColor)
-        b1 = b1 * whiteColor + gray1 * (1 - whiteColor)
-        # gray1 = min((r1 * 0.334 + g1 * 0.333 + b1 * 0.333), 1)
+    bgray = bpix[:, :, 0] * 0.334 + bpix[:, :, 1] * 0.333 + bpix[:, :, 2] * 0.333
+    bpix *= bcolor
+    bpix[:, :, 0] += bgray * (1. - bcolor)
+    bpix[:, :, 1] += bgray * (1. - bcolor)
+    bpix[:, :, 2] += bgray * (1. - bcolor)
 
-        gray2 = min((r2 * 0.334 + g2 * 0.333 + b2 * 0.333), 1)
-        r2 = r2 * blackColor + gray2 * (1 - blackColor)
-        g2 = g2 * blackColor + gray2 * (1 - blackColor)
-        b2 = b2 * blackColor + gray2 * (1 - blackColor)
-        # gray2 = min((r2 * 0.334 + g2 * 0.333 + b2 * 0.333), 1)
+    d = 1. - wpix + bpix
 
-        dr = 1 - r1 + r2
-        dg = 1 - g1 + g2
-        db = 1 - b1 + b2
+    d[:, :, 0] = d[:, :, 1] = d[:, :, 2] = d[:, :, 0] * 0.222 + d[:, :, 1] * 0.707 + d[:, :, 2] * 0.071
 
-        maxc = max(r2, g2, b2)
-        a = min(max(dr * 0.222 + dg * 0.707 + db * 0.071, maxc), 1)
+    p = np.where(d != 0, bpix / d * 255., 255.)
+    a = d[:, :, 0] * 255.
 
-        if a == 0:
-            r = g = b = 1
-        else:
-            r = min(r2 / a, 1)
-            g = min(g2 / a, 1)
-            b = min(b2 / a, 1)
+    colors = np.zeros((p.shape[0], p.shape[1], 4))
+    colors[:, :, :3] = p
+    colors[:, :, -1] = a
 
-        pix3.append((round(r * 255), round(g * 255), round(b * 255), round(a * 255)))
+    colors[colors > 255] = 255
 
-    im3.putdata(pix3)
+    return Image.fromarray(colors.astype("uint8")).convert("RGBA")
 
-    return im3
+
+if __name__ == "__main__":
+    from sys import argv
+
+    im1 = Image.open(argv[1])
+    im2 = Image.open(argv[2])
+    # gray_car(im1, im2).save(argv[3])
+    color_car(im1, im2).save(argv[4])
