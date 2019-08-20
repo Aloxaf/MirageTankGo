@@ -33,11 +33,7 @@ Examples:
 
 from docopt import docopt
 from PIL import Image
-
-try:
-    from MTCore import CMTCore as MTCore
-except ImportError:
-    from MTCore import MTCore
+from MTCore import MTCore
 
 
 if __name__ == '__main__':
@@ -71,6 +67,6 @@ if __name__ == '__main__':
             color = argv['--color'].split('-')
             kwargs['whiteColor'] = float(color[0])
             kwargs['blackColor'] = float(color[1])
-            MTCore.colorfulCar(whiteImg, blackImg, **kwargs).save(argv['OUTPUT'], 'PNG')
+            MTCore.color_car(whiteImg, blackImg, **kwargs).save(argv['OUTPUT'], 'PNG')
         else:
-            MTCore.grayCar(whiteImg, blackImg, **kwargs).save(argv['OUTPUT'], 'PNG')
+            MTCore.gray_car(whiteImg, blackImg, **kwargs).save(argv['OUTPUT'], 'PNG')
